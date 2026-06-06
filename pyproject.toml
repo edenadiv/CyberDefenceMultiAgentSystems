@@ -61,7 +61,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-addopts = "-ra -q --strict-markers"
+addopts = "-ra -q --strict-markers -m 'not integration and not slow'"
 timeout = 30
 markers = [
     "integration: tests that require the message bus or simulator running",
@@ -89,8 +89,8 @@ plugins = ["pydantic.mypy"]
 mypy_path = "src"
 packages = ["cdmas"]
 
-# scikit-learn ships only partial type information; treat it as untyped.
+# scikit-learn and aiokafka ship only partial type information; treat them as untyped.
 [[tool.mypy.overrides]]
-module = ["sklearn.*"]
+module = ["sklearn.*", "aiokafka.*"]
 ignore_missing_imports = true
 disallow_untyped_calls = false
