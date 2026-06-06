@@ -95,39 +95,142 @@ services:
     depends_on:
       kafka: { condition: service_healthy }
 
-  # -------------------------------------------- per-segment agents (seg1 shown)
-  # Replicate the tma/aca/rca trio per active segment (seg1..seg4).
-  tma-seg1:
+  # ------------------------------------------ per-segment agent trios (4 zones)
+  # One TMA + ACA + RCA per segment. Agent IDs use the segment value so coalition
+  # membership (RCA:<segment>) resolves consistently with the in-process factory.
+  tma-public-facing:
     profiles: ["app"]
     build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
     command: cdmas-tma
     environment:
       <<: *python-env
-      CDMAS_AGENT_ID: "TMA:seg1"
+      CDMAS_AGENT_ID: "TMA:public-facing"
       CDMAS_AGENT_SEGMENT: "public-facing"
     depends_on:
       kafka: { condition: service_healthy }
       simulator: { condition: service_started }
 
-  aca-seg1:
+  aca-public-facing:
     profiles: ["app"]
     build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
     command: cdmas-aca
     environment:
       <<: *python-env
-      CDMAS_AGENT_ID: "ACA:seg1"
+      CDMAS_AGENT_ID: "ACA:public-facing"
       CDMAS_AGENT_SEGMENT: "public-facing"
     depends_on:
       kafka: { condition: service_healthy }
 
-  rca-seg1:
+  rca-public-facing:
     profiles: ["app"]
     build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
     command: cdmas-rca
     environment:
       <<: *python-env
-      CDMAS_AGENT_ID: "RCA:seg1"
+      CDMAS_AGENT_ID: "RCA:public-facing"
       CDMAS_AGENT_SEGMENT: "public-facing"
+    depends_on:
+      kafka: { condition: service_healthy }
+
+  tma-internal:
+    profiles: ["app"]
+    build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
+    command: cdmas-tma
+    environment:
+      <<: *python-env
+      CDMAS_AGENT_ID: "TMA:internal"
+      CDMAS_AGENT_SEGMENT: "internal"
+    depends_on:
+      kafka: { condition: service_healthy }
+      simulator: { condition: service_started }
+
+  aca-internal:
+    profiles: ["app"]
+    build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
+    command: cdmas-aca
+    environment:
+      <<: *python-env
+      CDMAS_AGENT_ID: "ACA:internal"
+      CDMAS_AGENT_SEGMENT: "internal"
+    depends_on:
+      kafka: { condition: service_healthy }
+
+  rca-internal:
+    profiles: ["app"]
+    build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
+    command: cdmas-rca
+    environment:
+      <<: *python-env
+      CDMAS_AGENT_ID: "RCA:internal"
+      CDMAS_AGENT_SEGMENT: "internal"
+    depends_on:
+      kafka: { condition: service_healthy }
+
+  tma-server:
+    profiles: ["app"]
+    build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
+    command: cdmas-tma
+    environment:
+      <<: *python-env
+      CDMAS_AGENT_ID: "TMA:server"
+      CDMAS_AGENT_SEGMENT: "server"
+    depends_on:
+      kafka: { condition: service_healthy }
+      simulator: { condition: service_started }
+
+  aca-server:
+    profiles: ["app"]
+    build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
+    command: cdmas-aca
+    environment:
+      <<: *python-env
+      CDMAS_AGENT_ID: "ACA:server"
+      CDMAS_AGENT_SEGMENT: "server"
+    depends_on:
+      kafka: { condition: service_healthy }
+
+  rca-server:
+    profiles: ["app"]
+    build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
+    command: cdmas-rca
+    environment:
+      <<: *python-env
+      CDMAS_AGENT_ID: "RCA:server"
+      CDMAS_AGENT_SEGMENT: "server"
+    depends_on:
+      kafka: { condition: service_healthy }
+
+  tma-sec-mon:
+    profiles: ["app"]
+    build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
+    command: cdmas-tma
+    environment:
+      <<: *python-env
+      CDMAS_AGENT_ID: "TMA:sec-mon"
+      CDMAS_AGENT_SEGMENT: "sec-mon"
+    depends_on:
+      kafka: { condition: service_healthy }
+      simulator: { condition: service_started }
+
+  aca-sec-mon:
+    profiles: ["app"]
+    build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
+    command: cdmas-aca
+    environment:
+      <<: *python-env
+      CDMAS_AGENT_ID: "ACA:sec-mon"
+      CDMAS_AGENT_SEGMENT: "sec-mon"
+    depends_on:
+      kafka: { condition: service_healthy }
+
+  rca-sec-mon:
+    profiles: ["app"]
+    build: { context: ., dockerfile: deploy/dockerfiles/agent.Dockerfile }
+    command: cdmas-rca
+    environment:
+      <<: *python-env
+      CDMAS_AGENT_ID: "RCA:sec-mon"
+      CDMAS_AGENT_SEGMENT: "sec-mon"
     depends_on:
       kafka: { condition: service_healthy }
 

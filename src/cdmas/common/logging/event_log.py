@@ -58,3 +58,15 @@ class InMemorySink(EventSink):
 
     async def write(self, event: EventLog) -> None:
         self.events.append(event)
+
+
+class StructlogSink(EventSink):
+    """Emits each event as a structured JSON log line (production default)."""
+
+    def __init__(self) -> None:
+        import structlog
+
+        self._log = structlog.get_logger("cdmas.events")
+
+    async def write(self, event: EventLog) -> None:
+        self._log.info(event.event_type.value, **event.model_dump(mode="json"))

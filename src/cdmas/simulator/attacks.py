@@ -95,9 +95,13 @@ class AttackInjector:
                 for p in ports
             ]
         if spec.type == AttackType.LATERAL:
-            neighbors = self._topology.neighbors(segment) if self._topology else set()
+            neighbors = list(self._topology.neighbors(segment)) if self._topology else []
+            if not neighbors:
+                return []
+            count = max(len(neighbors), int(spec.intensity * 15))
             pkts = []
-            for nb in neighbors:
+            for i in range(count):
+                nb = neighbors[i % len(neighbors)]
                 nidx = list(Segment).index(nb)
                 pkts.append(
                     Packet(
@@ -105,12 +109,13 @@ class AttackInjector:
                         dst_ip=f"10.{nidx}.0.9",
                         port=445,
                         pkt_size=256,
-                        freq=3.0,
+                        freq=300.0,
                         ts_ms=now_ms,
                     )
                 )
             return pkts
         if spec.type in (AttackType.ZERO_DAY, AttackType.NOVEL):
+            count = max(1, int(spec.intensity * 20))
             return [
                 Packet(
                     src_ip="192.0.2.66",
@@ -118,8 +123,9 @@ class AttackInjector:
                     port=31337,
                     protocol="UDP",
                     pkt_size=9000,
-                    freq=42.0,
+                    freq=4000.0,
                     ts_ms=now_ms,
                 )
+                for _ in range(count)
             ]
         return []

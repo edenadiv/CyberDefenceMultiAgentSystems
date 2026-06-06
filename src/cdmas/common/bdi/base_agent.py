@@ -8,11 +8,18 @@ from abc import ABC, abstractmethod
 from cdmas.common.bdi.belief_base import BeliefBase
 from cdmas.common.bdi.goals import GoalSet
 from cdmas.common.bdi.plan import Intention, Plan
-from cdmas.common.logging.event_log import EventSink, InMemorySink
+from cdmas.common.logging.event_log import (
+    DecisionTrace,
+    EventLog,
+    EventSink,
+    EventType,
+    InMemorySink,
+)
 from cdmas.common.messaging.acl import ACLMessage
 from cdmas.common.messaging.bus import MessageBus, Subscription
 from cdmas.common.messaging.lamport import LamportClock
 from cdmas.common.messaging.topics import Topic
+from cdmas.common.timing.clock import Clock, WallClock
 
 
 class BaseAgent(ABC):
@@ -22,6 +29,8 @@ class BaseAgent(ABC):
         segment: str | None,
         bus: MessageBus,
         event_sink: EventSink | None = None,
+        *,
+        clock: Clock | None = None,
     ) -> None:
         self.agent_id = agent_id
         self.agent_type = agent_id.split(":")[0]
@@ -31,11 +40,37 @@ class BaseAgent(ABC):
         self.goals = GoalSet()
         self.plans: list[Plan] = []
         self.intention: Intention | None = None
-        self.clock = LamportClock()
+        self.clock = LamportClock()  # logical (causal) clock
+        self.timer: Clock = clock or WallClock()  # wall/sim clock for latency measurement
         self.sink: EventSink = event_sink or InMemorySink()
         self._subs: list[Subscription] = []
         self._seq = 0
         self._running = False
+
+    def now_ms(self) -> float:
+        return self.timer.now_ms()
+
+    async def log_event(
+        self,
+        event_type: EventType,
+        *,
+        payload: dict[str, object] | None = None,
+        latency_ms: int | None = None,
+        decision_trace: DecisionTrace | None = None,
+    ) -> None:
+        await self.sink.write(
+            EventLog(
+                lamport_ts=self.clock.time,
+                wall_ms=self.now_ms(),
+                event_type=event_type,
+                agent_id=self.agent_id,
+                agent_type=self.agent_type,
+                segment=self.segment,
+                payload=payload or {},
+                latency_ms=latency_ms,
+                decision_trace=decision_trace,
+            )
+        )
 
     # --- subclass extension points ---------------------------------------
     @abstractmethod

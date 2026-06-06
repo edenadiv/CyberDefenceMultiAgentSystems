@@ -18,13 +18,13 @@ htmlcov/
 .mypy_cache/
 .ruff_cache/
 
-# Logs / runtime data
+# Logs / runtime data (root-level only; keep frontend/src/data/)
 *.log
 *.sqlite
 *.sqlite3
-data/
-runs/
-event_logs/
+/data/
+/runs/
+/event_logs/
 
 # Frontend
 frontend/node_modules/

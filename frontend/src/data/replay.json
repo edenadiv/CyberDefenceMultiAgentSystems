@@ -1,0 +1,4975 @@
+{
+  "topology": {
+    "segments": [
+      "internal",
+      "server",
+      "public-facing",
+      "sec-mon"
+    ],
+    "adjacency": {
+      "internal": [
+        "sec-mon",
+        "server"
+      ],
+      "server": [
+        "internal",
+        "public-facing",
+        "sec-mon"
+      ],
+      "public-facing": [
+        "sec-mon",
+        "server"
+      ],
+      "sec-mon": [
+        "internal",
+        "public-facing",
+        "server"
+      ]
+    }
+  },
+  "replay": {
+    "scenario": "Scenario 2 - Multi-Segment",
+    "duration_ms": 3950.0,
+    "events": [
+      {
+        "event_id": "1a734333-d08d-43b5-ab58-5981b1c6bca4",
+        "lamport_ts": 0,
+        "wall_ms": 0.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.846324Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "sampling",
+          "sample_rate_hz": 100.0,
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "694a5894-ca35-4a48-9051-da934d1b8578",
+        "lamport_ts": 0,
+        "wall_ms": 0.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.846341Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "baseline_update",
+          "segment": "public-facing",
+          "mean": 40087.81838946012
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "8a4d2600-685d-400c-9b9c-22c8ef2b62cb",
+        "lamport_ts": 0,
+        "wall_ms": 0.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.846357Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "sampling",
+          "sample_rate_hz": 100.0,
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "ccf11118-4c77-46b6-9637-8a1004605d9d",
+        "lamport_ts": 0,
+        "wall_ms": 0.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.846366Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "baseline_update",
+          "segment": "internal",
+          "mean": 14991.800329092295
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "9086dd3f-49f7-4468-904c-0a4b9874d975",
+        "lamport_ts": 1,
+        "wall_ms": 0.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.846390Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "priority_list",
+          "count": 0
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "19e9563e-488d-493f-982b-1f5d468baac0",
+        "lamport_ts": 0,
+        "wall_ms": 0.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:34.846413Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "overhead",
+          "overhead": 0.0,
+          "status": "OK"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "d373c49f-7570-4115-9f21-b7bbaae3fde6",
+        "lamport_ts": 1,
+        "wall_ms": 250.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:34.847146Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "9ba5bc98-f702-4b5b-be7e-de3c06f01946",
+          "deviation_score": 2.200708072081558
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "e6be225e-fa93-4e63-b32f-6b0c8052fc1f",
+        "lamport_ts": 3,
+        "wall_ms": 250.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.848495Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "9ba5bc98-f702-4b5b-be7e-de3c06f01946",
+          "threat_id": "9bc83e2a-7a7e-442b-b9ff-6b0848fc1eee",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "9ba5bc98-f702-4b5b-be7e-de3c06f01946"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.00",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "1555807f-879e-4197-980e-2aaca65511e6",
+        "lamport_ts": 3,
+        "wall_ms": 250.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.849853Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "9ba5bc98-f702-4b5b-be7e-de3c06f01946",
+          "threat_id": "3bfb8385-112e-478c-9bc3-1342fbbdda91",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "9ba5bc98-f702-4b5b-be7e-de3c06f01946"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.72 novelty=0.18",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "06f72273-60f7-404e-8737-a5f22ca4e949",
+        "lamport_ts": 1,
+        "wall_ms": 650.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:34.851121Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "alert",
+          "segment": "internal",
+          "alert_id": "76c2fad5-d325-42df-98f1-af2c8903dec0",
+          "deviation_score": 3.0917504310819535
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "049b4b31-bdfd-4989-bfff-3e4547937e48",
+        "lamport_ts": 4,
+        "wall_ms": 650.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.852445Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "76c2fad5-d325-42df-98f1-af2c8903dec0",
+          "threat_id": "268d7027-5d30-46a4-a8f2-664c3393d2d9",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "76c2fad5-d325-42df-98f1-af2c8903dec0"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.98 novelty=0.00",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "05ffbd80-a0af-403d-b887-cfffb3526ce5",
+        "lamport_ts": 4,
+        "wall_ms": 700.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.853924Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "76c2fad5-d325-42df-98f1-af2c8903dec0",
+          "threat_id": "8a90fb4f-778c-4812-856e-af48ef5ea764",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 50,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "76c2fad5-d325-42df-98f1-af2c8903dec0"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.70 novelty=0.17",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "a907caf1-8bfd-4526-adfc-a6569f3ca8e9",
+        "lamport_ts": 2,
+        "wall_ms": 900.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:34.854595Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "10b1b6f2-fbce-456c-afcb-63c266e221ba",
+          "deviation_score": 2.3107470161054486
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "72800a57-ac3c-41d7-9189-7d516add50c5",
+        "lamport_ts": 5,
+        "wall_ms": 900.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.855923Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "10b1b6f2-fbce-456c-afcb-63c266e221ba",
+          "threat_id": "4fe5db34-7b55-454e-bbaf-31eec3bb614d",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "10b1b6f2-fbce-456c-afcb-63c266e221ba"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.01",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "4201d3e6-3af8-4bd0-b8d8-d7e5d739fea6",
+        "lamport_ts": 5,
+        "wall_ms": 900.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.857252Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "10b1b6f2-fbce-456c-afcb-63c266e221ba",
+          "threat_id": "015142d9-2247-424e-afc1-fc28813ec868",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "10b1b6f2-fbce-456c-afcb-63c266e221ba"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.70 novelty=0.19",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "6a318c86-e001-4e70-aea7-675250f216e9",
+        "lamport_ts": 2,
+        "wall_ms": 1000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.857542Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "sampling",
+          "sample_rate_hz": 100.0,
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "769114f3-a1d3-415e-9f4e-d2efc888c51e",
+        "lamport_ts": 2,
+        "wall_ms": 1000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.857551Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "baseline_update",
+          "segment": "public-facing",
+          "mean": 39680.79844029502
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "6c7b5d96-494a-46ad-875e-d718d610643d",
+        "lamport_ts": 1,
+        "wall_ms": 1000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.857579Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "sampling",
+          "sample_rate_hz": 100.0,
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "7ff15146-2cdc-4965-9265-7e60e33d9ec6",
+        "lamport_ts": 1,
+        "wall_ms": 1000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.857587Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "baseline_update",
+          "segment": "internal",
+          "mean": 14888.322049079858
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "610cec64-c775-4c03-88ae-252025d07626",
+        "lamport_ts": 2,
+        "wall_ms": 1000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.857606Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "priority_list",
+          "count": 0
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "ebb098c9-5c9b-4e7a-af49-908cb79b6701",
+        "lamport_ts": 0,
+        "wall_ms": 1000.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:34.857624Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "overhead",
+          "overhead": 0.0,
+          "status": "OK"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "6a94de99-b467-4437-8e16-370eb856cee2",
+        "lamport_ts": 3,
+        "wall_ms": 1200.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:34.858268Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "246d49ce-5c1f-46dd-b5c2-b5a8e532c5b1",
+          "deviation_score": 2.133021245541329
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "b32cad61-30c0-44af-ba15-e78a3e32b5b3",
+        "lamport_ts": 7,
+        "wall_ms": 1200.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.859569Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "246d49ce-5c1f-46dd-b5c2-b5a8e532c5b1",
+          "threat_id": "52927de4-4a17-4586-bc3e-c71f08870500",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "246d49ce-5c1f-46dd-b5c2-b5a8e532c5b1"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.98 novelty=0.04",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "f43837ed-5cf4-494d-9df2-8355607a8401",
+        "lamport_ts": 7,
+        "wall_ms": 1200.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.860905Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "246d49ce-5c1f-46dd-b5c2-b5a8e532c5b1",
+          "threat_id": "c24dd1dd-9d5d-42aa-8ef3-ef3d99c50784",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "246d49ce-5c1f-46dd-b5c2-b5a8e532c5b1"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.68 novelty=0.19",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "1edb3f97-e524-427d-bf8b-337c0a806621",
+        "lamport_ts": 2,
+        "wall_ms": 1350.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:34.861422Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "alert",
+          "segment": "internal",
+          "alert_id": "e6164a5b-8f2c-40aa-9efa-b855702ce7af",
+          "deviation_score": 4.065716205367559
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "152ff410-e9b4-4501-88b0-fc97d6cca091",
+        "lamport_ts": 8,
+        "wall_ms": 1350.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.862753Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "e6164a5b-8f2c-40aa-9efa-b855702ce7af",
+          "threat_id": "2fee6051-11fd-4e90-b2fc-e0b99e5e5673",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "e6164a5b-8f2c-40aa-9efa-b855702ce7af"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.00",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "a85ce224-8e3a-4466-a415-bc04b156e856",
+        "lamport_ts": 8,
+        "wall_ms": 1400.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.864204Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "e6164a5b-8f2c-40aa-9efa-b855702ce7af",
+          "threat_id": "0522ff8b-93be-4282-b70d-0837f06dfcdc",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 50,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "e6164a5b-8f2c-40aa-9efa-b855702ce7af"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.70 novelty=0.17",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "e55e4569-0cca-4431-af46-b660f5561c96",
+        "lamport_ts": 0,
+        "wall_ms": 1500.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.864680Z",
+        "agent_id": "ATK:ddos",
+        "agent_type": "ATK",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "attack_action",
+          "attack_type": "DDOS",
+          "segment": "public-facing",
+          "mode": "coordinated",
+          "intensity": 3.0,
+          "src_ips": [
+            "203.0.217.162",
+            "203.0.130.69",
+            "203.0.79.11",
+            "203.0.20.5",
+            "203.0.45.207",
+            "203.0.165.232",
+            "203.0.128.155",
+            "203.0.247.186",
+            "203.0.161.139",
+            "203.0.143.238",
+            "203.0.71.208",
+            "203.0.171.1",
+            "203.0.101.218",
+            "203.0.141.9",
+            "203.0.195.186",
+            "203.0.216.45",
+            "203.0.23.220",
+            "203.0.6.138",
+            "203.0.21.77",
+            "203.0.123.108",
+            "203.0.103.8",
+            "203.0.2.32",
+            "203.0.3.171",
+            "203.0.134.165",
+            "203.0.66.157",
+            "203.0.195.98",
+            "203.0.118.254",
+            "203.0.205.250",
+            "203.0.97.175",
+            "203.0.242.166",
+            "203.0.214.175",
+            "203.0.179.99",
+            "203.0.223.35",
+            "203.0.148.184",
+            "203.0.215.134",
+            "203.0.96.79",
+            "203.0.108.124",
+            "203.0.183.226",
+            "203.0.19.238",
+            "203.0.135.91",
+            "203.0.171.146",
+            "203.0.65.82",
+            "203.0.183.151",
+            "203.0.129.86",
+            "203.0.194.100",
+            "203.0.84.227",
+            "203.0.68.58",
+            "203.0.182.159",
+            "203.0.13.22",
+            "203.0.96.212",
+            "203.0.102.200",
+            "203.0.81.61",
+            "203.0.202.223",
+            "203.0.21.15",
+            "203.0.171.86",
+            "203.0.146.39",
+            "203.0.219.115",
+            "203.0.228.203",
+            "203.0.180.59",
+            "203.0.195.14"
+          ],
+          "min_unique_ips": 20
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "8d88dbe4-4bf1-4c14-8a65-ba00bbe54e32",
+        "lamport_ts": 0,
+        "wall_ms": 1500.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.864690Z",
+        "agent_id": "ATK:lat",
+        "agent_type": "ATK",
+        "segment": "internal",
+        "payload": {
+          "signal": "attack_action",
+          "attack_type": "LATERAL",
+          "segment": "internal",
+          "mode": "coordinated",
+          "intensity": 4.0,
+          "technique": "smb-enumeration",
+          "persistence": true
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "a67865d6-847d-4876-bc36-a82127668da6",
+        "lamport_ts": 4,
+        "wall_ms": 1550.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:34.864998Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "f46186a6-c754-4d7f-9e3e-13cf97a2fa79",
+          "deviation_score": 1951.8064934976626
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "bd593c58-2b75-4725-97f5-8cf818c53abe",
+        "lamport_ts": 10,
+        "wall_ms": 1550.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.866346Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "f46186a6-c754-4d7f-9e3e-13cf97a2fa79",
+          "threat_id": "58ca276e-dc0b-44be-b0ed-23285e853525",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "f46186a6-c754-4d7f-9e3e-13cf97a2fa79"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.04",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "863ffbd7-b669-4c14-a0e5-2f2712281598",
+        "lamport_ts": 11,
+        "wall_ms": 1550.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.866389Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "public-facing",
+          "threat_id": "58ca276e-dc0b-44be-b0ed-23285e853525",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "58ca276e-dc0b-44be-b0ed-23285e853525",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "6528c130-4204-4310-bef1-c21e716fa6a7",
+        "lamport_ts": 12,
+        "wall_ms": 1550.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:34.866408Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "threat_id": "58ca276e-dc0b-44be-b0ed-23285e853525",
+          "resolution_id": "8395e21d-7598-40fe-994e-a38349017c49",
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "486cad14-585a-4d3c-8d66-5f1f5910a988",
+        "lamport_ts": 13,
+        "wall_ms": 1550.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.867771Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "f46186a6-c754-4d7f-9e3e-13cf97a2fa79",
+          "threat_id": "5df695e6-6c52-412c-ae8f-03bf529d3233",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "f46186a6-c754-4d7f-9e3e-13cf97a2fa79"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.09",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "3c020da4-8f48-40a8-8e51-32d82bdcf13c",
+        "lamport_ts": 14,
+        "wall_ms": 1550.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.867799Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "internal",
+          "threat_id": "5df695e6-6c52-412c-ae8f-03bf529d3233",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "5df695e6-6c52-412c-ae8f-03bf529d3233",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "2c43e1a3-b0e9-4a60-b88a-8c602527c9a9",
+        "lamport_ts": 15,
+        "wall_ms": 1550.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:34.867814Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "threat_id": "5df695e6-6c52-412c-ae8f-03bf529d3233",
+          "resolution_id": "fe57d2db-e191-4e94-bc6f-26004ca39833",
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "82663938-36b2-4ced-8dd3-d001f11bb6c4",
+        "lamport_ts": 13,
+        "wall_ms": 1550.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.867847Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "threat_model_update",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "de9139de-c988-4028-8c0d-b7d67122d841",
+        "lamport_ts": 13,
+        "wall_ms": 1550.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.867857Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "correlation",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "8d15f32d-aedf-49ac-adaf-f7de7d08d629",
+        "lamport_ts": 14,
+        "wall_ms": 1550.0,
+        "event_type": "COALITION_FORMED",
+        "timestamp": "2026-06-06T13:02:34.867872Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "coalition_id": "47bb91f5-7430-40b8-97ab-e02864826a5e",
+          "members": [
+            "RCA:internal",
+            "RCA:public-facing"
+          ],
+          "lead_rca": "RCA:internal",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "31db5e81-7e4e-441b-9e19-88782b5f975b",
+        "lamport_ts": 18,
+        "wall_ms": 1550.0,
+        "event_type": "AUCTION_COMPLETED",
+        "timestamp": "2026-06-06T13:02:34.867900Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "bids": {
+            "RCA:public-facing": 0.99,
+            "RCA:internal": 0.99
+          },
+          "granted": [
+            "RCA:public-facing",
+            "RCA:internal"
+          ],
+          "denied": [],
+          "slots": 4,
+          "notify_latency_ms": 0
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "b03be688-6833-4f28-a249-74121f53f31d",
+        "lamport_ts": 18,
+        "wall_ms": 1550.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:34.867905Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "reclaim"
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "6c687f1d-65d2-49cf-90b3-243f3dad3ae1",
+        "lamport_ts": 15,
+        "wall_ms": 1600.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.892503Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "58ca276e-dc0b-44be-b0ed-23285e853525"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "9b5acfad-5a00-4ef0-909a-6e0f4a78e4f5",
+        "lamport_ts": 15,
+        "wall_ms": 1600.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.916627Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "5df695e6-6c52-412c-ae8f-03bf529d3233"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "8429c996-4cff-476e-98c2-b00a3ce4f87f",
+        "lamport_ts": 3,
+        "wall_ms": 1700.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:34.917491Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "alert",
+          "segment": "internal",
+          "alert_id": "a758ebdc-ffd8-4758-8d00-0a0f4fd30f00",
+          "deviation_score": 2.227610931769975
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "8222703c-e5a5-4fb6-ac61-e434e422bada",
+        "lamport_ts": 19,
+        "wall_ms": 1700.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.918873Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "a758ebdc-ffd8-4758-8d00-0a0f4fd30f00",
+          "threat_id": "d95cf1dd-f058-4141-b7cc-2319ddc3f90c",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "a758ebdc-ffd8-4758-8d00-0a0f4fd30f00"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.00",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "d208624c-60bd-4eb2-9b2d-9df892f05ee8",
+        "lamport_ts": 19,
+        "wall_ms": 1750.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.920547Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "a758ebdc-ffd8-4758-8d00-0a0f4fd30f00",
+          "threat_id": "b12bf621-569a-4501-b2e7-7b000445418d",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 50,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "a758ebdc-ffd8-4758-8d00-0a0f4fd30f00"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.72 novelty=0.17",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "8c1d109c-a682-4fac-aa4c-72bd34ef4968",
+        "lamport_ts": 5,
+        "wall_ms": 1850.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:34.921311Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "e639ba77-eeef-48e2-b727-4881d4828437",
+          "deviation_score": 391.50813813030084
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "e99e7f78-ff3f-4048-8f95-ba372ef005b4",
+        "lamport_ts": 21,
+        "wall_ms": 1850.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.922649Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "e639ba77-eeef-48e2-b727-4881d4828437",
+          "threat_id": "3be0915a-852a-409a-89b6-d9b29b0a55e1",
+          "classification": "SUSPICIOUS",
+          "attack_type": "DDOS",
+          "severity": 0.5650000000000001,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "e639ba77-eeef-48e2-b727-4881d4828437"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.55 novelty=1.21",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "ea5bc87d-177f-4df9-8e6d-e27f501e9e4c",
+        "lamport_ts": 21,
+        "wall_ms": 1850.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.924012Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "e639ba77-eeef-48e2-b727-4881d4828437",
+          "threat_id": "d1f9820f-c1c4-4e4c-9c2a-4df404bec80b",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.9185,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "e639ba77-eeef-48e2-b727-4881d4828437"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.82 novelty=1.16",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "a6ab7d2b-fab8-4533-8cba-fde8b12eb371",
+        "lamport_ts": 23,
+        "wall_ms": 1850.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.924047Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "signal": "response",
+          "action": "THROTTLE",
+          "severity": 0.9185,
+          "segment": "internal",
+          "threat_id": "d1f9820f-c1c4-4e4c-9c2a-4df404bec80b",
+          "proportionality_score": 0.94,
+          "effectiveness": 0.8
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "d1f9820f-c1c4-4e4c-9c2a-4df404bec80b",
+            "severity": 0.9185
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.92",
+          "action": "THROTTLE"
+        }
+      },
+      {
+        "event_id": "dfa67482-497c-4385-a1f2-160308eb65de",
+        "lamport_ts": 24,
+        "wall_ms": 1850.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:34.924065Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "threat_id": "d1f9820f-c1c4-4e4c-9c2a-4df404bec80b",
+          "resolution_id": "8977f449-a82c-4f70-83c6-85c429a92d17",
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "69373a45-d26f-41bf-b5ca-75ff5df42dea",
+        "lamport_ts": 22,
+        "wall_ms": 1850.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.924081Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "threat_model_update",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "9d118998-fdf4-419e-acab-ca1848f08721",
+        "lamport_ts": 25,
+        "wall_ms": 1850.0,
+        "event_type": "AUCTION_COMPLETED",
+        "timestamp": "2026-06-06T13:02:34.924104Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "bids": {
+            "RCA:internal": 0.9185
+          },
+          "granted": [
+            "RCA:internal"
+          ],
+          "denied": [],
+          "slots": 4,
+          "notify_latency_ms": 0
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "70b9d515-2743-40e5-bfc7-9f7ad794e0e7",
+        "lamport_ts": 25,
+        "wall_ms": 1850.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:34.924109Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "reclaim"
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "177bb467-9fd9-4315-8058-805d60b0ad53",
+        "lamport_ts": 24,
+        "wall_ms": 1900.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.948849Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "3be0915a-852a-409a-89b6-d9b29b0a55e1"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "c8b5a4c4-f7af-4f9b-b2e4-273e2fceca77",
+        "lamport_ts": 24,
+        "wall_ms": 1900.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.973019Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "d1f9820f-c1c4-4e4c-9c2a-4df404bec80b"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "26e52559-e0f9-4a19-bb5c-e367904e3ed2",
+        "lamport_ts": 5,
+        "wall_ms": 2000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.973820Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "sampling",
+          "sample_rate_hz": 100.0,
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "fe6c1c8c-c75a-4990-bc11-6f2adf02e8a7",
+        "lamport_ts": 3,
+        "wall_ms": 2000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.973859Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "sampling",
+          "sample_rate_hz": 100.0,
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "ff69835d-f0df-4e52-99bc-7157939b0977",
+        "lamport_ts": 3,
+        "wall_ms": 2000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.973867Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "baseline_update",
+          "segment": "internal",
+          "mean": 14896.792744586808
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "2d294f1b-5e9a-4428-b0df-772630e26725",
+        "lamport_ts": 23,
+        "wall_ms": 2000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.973893Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "priority_list",
+          "count": 4
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "208ae853-e4e0-4706-87e5-b617e68810a1",
+        "lamport_ts": 25,
+        "wall_ms": 2000.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:34.973919Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "overhead",
+          "overhead": 0.0,
+          "status": "OK"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "cc5387ef-608a-4034-83d9-e04c015c3c64",
+        "lamport_ts": 6,
+        "wall_ms": 2150.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:34.975013Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "6ad83804-7c7b-43cd-ad24-2179262b595b",
+          "deviation_score": 389.93845566791924
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "c5e24a62-f915-4d69-a144-076006146ca3",
+        "lamport_ts": 28,
+        "wall_ms": 2150.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:34.976446Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "6ad83804-7c7b-43cd-ad24-2179262b595b",
+          "threat_id": "74f61cac-eb88-4594-8e9c-cdb3bc8969cc",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.899,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "6ad83804-7c7b-43cd-ad24-2179262b595b"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.77 novelty=0.20",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "9b743a0e-3043-43e8-9209-a9bab19d3afe",
+        "lamport_ts": 29,
+        "wall_ms": 2150.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:34.976481Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "response",
+          "action": "THROTTLE",
+          "severity": 0.899,
+          "segment": "public-facing",
+          "threat_id": "74f61cac-eb88-4594-8e9c-cdb3bc8969cc",
+          "proportionality_score": 0.94,
+          "effectiveness": 0.8
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "74f61cac-eb88-4594-8e9c-cdb3bc8969cc",
+            "severity": 0.899
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.90",
+          "action": "THROTTLE"
+        }
+      },
+      {
+        "event_id": "584bf83b-fd65-4877-b993-ba2f1c921ee7",
+        "lamport_ts": 30,
+        "wall_ms": 2150.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:34.976500Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "threat_id": "74f61cac-eb88-4594-8e9c-cdb3bc8969cc",
+          "resolution_id": "20056dac-a4f4-457a-af04-5a1546040eb7",
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "b0cd18c4-3983-42ef-a492-1ce0bd8cba6b",
+        "lamport_ts": 30,
+        "wall_ms": 2150.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.000463Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "d1f9820f-c1c4-4e4c-9c2a-4df404bec80b"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "6ddc43b9-dcf8-4796-84df-59453855dafb",
+        "lamport_ts": 31,
+        "wall_ms": 2150.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.001898Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "6ad83804-7c7b-43cd-ad24-2179262b595b",
+          "threat_id": "44212f8e-bf1b-44bc-9a42-e8e6f85595fa",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "6ad83804-7c7b-43cd-ad24-2179262b595b"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.20",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "21fa91f8-f7f7-4655-9163-a7175ffdac48",
+        "lamport_ts": 32,
+        "wall_ms": 2150.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.001935Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "internal",
+          "threat_id": "44212f8e-bf1b-44bc-9a42-e8e6f85595fa",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "44212f8e-bf1b-44bc-9a42-e8e6f85595fa",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "da10c3c2-d58a-40eb-8898-4c99f66318be",
+        "lamport_ts": 33,
+        "wall_ms": 2150.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.001953Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "threat_id": "44212f8e-bf1b-44bc-9a42-e8e6f85595fa",
+          "resolution_id": "ac00e2a1-2c3f-471e-9391-72f276402af1",
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "99794949-387c-4b35-927f-836885da9098",
+        "lamport_ts": 31,
+        "wall_ms": 2150.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.001971Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "threat_model_update",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "d0b82cb8-2ec9-4592-b022-807115b305e5",
+        "lamport_ts": 36,
+        "wall_ms": 2150.0,
+        "event_type": "AUCTION_COMPLETED",
+        "timestamp": "2026-06-06T13:02:35.002001Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "bids": {
+            "RCA:public-facing": 0.899,
+            "RCA:internal": 0.99
+          },
+          "granted": [
+            "RCA:internal",
+            "RCA:public-facing"
+          ],
+          "denied": [],
+          "slots": 4,
+          "notify_latency_ms": 0
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "67c3d3cd-d04c-45f9-8eda-38cc5eea7764",
+        "lamport_ts": 36,
+        "wall_ms": 2150.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:35.002006Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "reclaim"
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "d8f21355-7503-4504-adae-9aa1b7784686",
+        "lamport_ts": 33,
+        "wall_ms": 2200.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.026127Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "74f61cac-eb88-4594-8e9c-cdb3bc8969cc"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "2d9b797c-223a-4b2d-b747-9f7c782cf9e7",
+        "lamport_ts": 33,
+        "wall_ms": 2200.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.050200Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "44212f8e-bf1b-44bc-9a42-e8e6f85595fa"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "20a2cb56-8157-47b6-a6b6-4ef6496d5804",
+        "lamport_ts": 4,
+        "wall_ms": 2350.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:35.051437Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "alert",
+          "segment": "internal",
+          "alert_id": "78b25293-1d03-4d3c-8c17-7b0ea726fc20",
+          "deviation_score": 2.441278727320009
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "b2a11a03-8f0b-4b45-b796-355664fb1fa0",
+        "lamport_ts": 36,
+        "wall_ms": 2350.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.052800Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "78b25293-1d03-4d3c-8c17-7b0ea726fc20",
+          "threat_id": "58143a02-c5e9-45b5-8a22-7adc90a6e206",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "78b25293-1d03-4d3c-8c17-7b0ea726fc20"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.00",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "63bcb2be-567e-4d75-84d9-072c5d9ebc6e",
+        "lamport_ts": 36,
+        "wall_ms": 2400.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.054452Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "78b25293-1d03-4d3c-8c17-7b0ea726fc20",
+          "threat_id": "2ba38d62-0934-4879-bc8b-6b56dec60859",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 50,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "78b25293-1d03-4d3c-8c17-7b0ea726fc20"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.70 novelty=0.17",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "5a7d2df2-ac10-4a9c-b63c-d9f509ff3ed8",
+        "lamport_ts": 7,
+        "wall_ms": 2450.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:35.054886Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "5cc37a12-cd74-4203-a519-c0f4ef9adef5",
+          "deviation_score": 391.109684495298
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "5dd7bef0-3228-4e57-bf53-b4365414159a",
+        "lamport_ts": 38,
+        "wall_ms": 2450.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.056218Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "5cc37a12-cd74-4203-a519-c0f4ef9adef5",
+          "threat_id": "cc10cae7-7010-4f1e-94ef-2ac775e7d44e",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.9575,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "5cc37a12-cd74-4203-a519-c0f4ef9adef5"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.92 novelty=0.08",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "b191313d-9400-4133-8792-b9bd73a95c53",
+        "lamport_ts": 39,
+        "wall_ms": 2450.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.056264Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.9575,
+          "segment": "public-facing",
+          "threat_id": "cc10cae7-7010-4f1e-94ef-2ac775e7d44e",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "cc10cae7-7010-4f1e-94ef-2ac775e7d44e",
+            "severity": 0.9575
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.96",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "6342fa8d-706c-4fc3-b390-b0cd918934ab",
+        "lamport_ts": 40,
+        "wall_ms": 2450.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.056287Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "threat_id": "cc10cae7-7010-4f1e-94ef-2ac775e7d44e",
+          "resolution_id": "18908c11-4e86-4593-8081-c0aa6073238c",
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "403f4059-c542-421a-80f3-186cc032f530",
+        "lamport_ts": 40,
+        "wall_ms": 2450.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.080618Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "44212f8e-bf1b-44bc-9a42-e8e6f85595fa"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "ba4e0a5f-f9d2-4783-a1c4-89af5adedf00",
+        "lamport_ts": 41,
+        "wall_ms": 2450.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.081968Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "5cc37a12-cd74-4203-a519-c0f4ef9adef5",
+          "threat_id": "65b81aca-89bc-49c2-bea5-5e49af66e6ad",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "5cc37a12-cd74-4203-a519-c0f4ef9adef5"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.08",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "6ba19d98-a98b-49d0-857d-771ad0129ba3",
+        "lamport_ts": 42,
+        "wall_ms": 2450.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.082018Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "internal",
+          "threat_id": "65b81aca-89bc-49c2-bea5-5e49af66e6ad",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "65b81aca-89bc-49c2-bea5-5e49af66e6ad",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "efa52256-5b7d-4ff5-8257-be3b0fd8bcc1",
+        "lamport_ts": 43,
+        "wall_ms": 2450.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.082038Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "threat_id": "65b81aca-89bc-49c2-bea5-5e49af66e6ad",
+          "resolution_id": "57e5a327-8539-4d85-bd2d-5eced40f6be9",
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "b5ecb2f7-0884-488b-9eef-cbb55287a08f",
+        "lamport_ts": 41,
+        "wall_ms": 2450.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.082056Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "threat_model_update",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "57412a32-2b5f-49e2-b2a7-dbd734fb424e",
+        "lamport_ts": 46,
+        "wall_ms": 2450.0,
+        "event_type": "AUCTION_COMPLETED",
+        "timestamp": "2026-06-06T13:02:35.082087Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "bids": {
+            "RCA:public-facing": 0.9575,
+            "RCA:internal": 0.99
+          },
+          "granted": [
+            "RCA:internal",
+            "RCA:public-facing"
+          ],
+          "denied": [],
+          "slots": 4,
+          "notify_latency_ms": 0
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "2e88d8aa-0e7d-4bc0-974d-599fdd82eb4f",
+        "lamport_ts": 46,
+        "wall_ms": 2450.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:35.082092Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "reclaim"
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "5565a511-7b4b-4f88-a887-5b138c429f9e",
+        "lamport_ts": 43,
+        "wall_ms": 2500.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.106579Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "cc10cae7-7010-4f1e-94ef-2ac775e7d44e"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "45629fdc-a22e-4953-8eea-39859d7724c3",
+        "lamport_ts": 43,
+        "wall_ms": 2500.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.131142Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "65b81aca-89bc-49c2-bea5-5e49af66e6ad"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "da13b5b4-482a-4921-86a2-45362d52a674",
+        "lamport_ts": 8,
+        "wall_ms": 2750.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:35.133002Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "ed5687dc-f801-49c5-9e73-7209e716979e",
+          "deviation_score": 389.599420709758
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "b8c8fadf-00bb-43d3-bdc6-bd801621b651",
+        "lamport_ts": 47,
+        "wall_ms": 2750.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.134509Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "ed5687dc-f801-49c5-9e73-7209e716979e",
+          "threat_id": "f323395d-5e8e-452c-a7d3-55a9d72c212e",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.977,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "ed5687dc-f801-49c5-9e73-7209e716979e"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.97 novelty=0.04",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "3f3c5248-6f73-4dec-ba9e-9256c80d01c3",
+        "lamport_ts": 48,
+        "wall_ms": 2750.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.134551Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.977,
+          "segment": "public-facing",
+          "threat_id": "f323395d-5e8e-452c-a7d3-55a9d72c212e",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "f323395d-5e8e-452c-a7d3-55a9d72c212e",
+            "severity": 0.977
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.98",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "f4e61d40-680d-4286-92dc-51d2dc4f9c70",
+        "lamport_ts": 49,
+        "wall_ms": 2750.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.134570Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "threat_id": "f323395d-5e8e-452c-a7d3-55a9d72c212e",
+          "resolution_id": "e48cd444-0421-48ee-becb-dfbcf00e59b9",
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "5546c577-6076-4b46-a7bc-fc5fee0ac7b4",
+        "lamport_ts": 49,
+        "wall_ms": 2750.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.159111Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "65b81aca-89bc-49c2-bea5-5e49af66e6ad"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "2f9812f6-6af8-42d3-97fd-165198d412d1",
+        "lamport_ts": 50,
+        "wall_ms": 2750.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.160447Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "ed5687dc-f801-49c5-9e73-7209e716979e",
+          "threat_id": "2b314747-5bd6-4987-927e-3bdf1a1e1a83",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "ed5687dc-f801-49c5-9e73-7209e716979e"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.04",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "f411667f-fd33-4d8a-82a0-e7c81716b595",
+        "lamport_ts": 51,
+        "wall_ms": 2750.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.160488Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "internal",
+          "threat_id": "2b314747-5bd6-4987-927e-3bdf1a1e1a83",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "2b314747-5bd6-4987-927e-3bdf1a1e1a83",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "482cc107-5a42-4262-aef1-16dd5e75f953",
+        "lamport_ts": 52,
+        "wall_ms": 2750.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.160507Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "threat_id": "2b314747-5bd6-4987-927e-3bdf1a1e1a83",
+          "resolution_id": "2c1540f0-6614-4ab3-9726-acd020764214",
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "a032060b-8b86-48bb-b357-5c42d1c3251f",
+        "lamport_ts": 50,
+        "wall_ms": 2750.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.160526Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "threat_model_update",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "c1671983-7bfb-496e-bb06-a65b9e6398ac",
+        "lamport_ts": 55,
+        "wall_ms": 2750.0,
+        "event_type": "AUCTION_COMPLETED",
+        "timestamp": "2026-06-06T13:02:35.160559Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "bids": {
+            "RCA:public-facing": 0.977,
+            "RCA:internal": 0.99
+          },
+          "granted": [
+            "RCA:internal",
+            "RCA:public-facing"
+          ],
+          "denied": [],
+          "slots": 4,
+          "notify_latency_ms": 0
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "a76d35b1-9d98-49cc-9073-f2876b1fff98",
+        "lamport_ts": 55,
+        "wall_ms": 2750.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:35.160565Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "reclaim"
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "f18e125c-f3a6-415c-a870-ae872abf0906",
+        "lamport_ts": 52,
+        "wall_ms": 2800.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.185075Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "f323395d-5e8e-452c-a7d3-55a9d72c212e"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "fc566858-9b33-492d-9976-e25709e83bc0",
+        "lamport_ts": 5,
+        "wall_ms": 2800.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:35.185192Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "alert",
+          "segment": "internal",
+          "alert_id": "35d1cc7f-be96-4c7e-ab48-491623977dda",
+          "deviation_score": 2.1461021564703096
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "d13b42da-3d6d-4b8f-9ee6-3af236e71ea9",
+        "lamport_ts": 56,
+        "wall_ms": 2800.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.209346Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "2b314747-5bd6-4987-927e-3bdf1a1e1a83"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "fbc40edd-13cb-46b7-b958-d851527ca318",
+        "lamport_ts": 56,
+        "wall_ms": 2800.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.210644Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "35d1cc7f-be96-4c7e-ab48-491623977dda",
+          "threat_id": "6c950419-13b3-4355-b11b-01af6e500e97",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "35d1cc7f-be96-4c7e-ab48-491623977dda"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.00",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "32ebd54a-8746-4c9d-b41a-b2aea750e7a0",
+        "lamport_ts": 55,
+        "wall_ms": 2850.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.212410Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "35d1cc7f-be96-4c7e-ab48-491623977dda",
+          "threat_id": "b444955b-1abd-4ef5-ba46-396887068c4c",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 50,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "35d1cc7f-be96-4c7e-ab48-491623977dda"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.68 novelty=0.18",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "e6fa8254-6bcc-4ff1-b5f3-e1fcb111d30b",
+        "lamport_ts": 8,
+        "wall_ms": 3000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.213451Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "sampling",
+          "sample_rate_hz": 100.0,
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "fbe759fa-284a-4b8d-9ec3-85b621003550",
+        "lamport_ts": 5,
+        "wall_ms": 3000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.213483Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "sampling",
+          "sample_rate_hz": 100.0,
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "301cdc4c-9108-46dc-ac19-b39947484303",
+        "lamport_ts": 5,
+        "wall_ms": 3000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.213493Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "baseline_update",
+          "segment": "internal",
+          "mean": 14924.15268091586
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "7ad19c16-458b-4455-bb51-60b3b149f887",
+        "lamport_ts": 51,
+        "wall_ms": 3000.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.213519Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "priority_list",
+          "count": 10
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "14797cef-b1cb-4cc3-b759-e4c7e9334a3e",
+        "lamport_ts": 55,
+        "wall_ms": 3000.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:35.213549Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "overhead",
+          "overhead": 0.0,
+          "status": "OK"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "2c5841c2-428e-46eb-88e3-7997d652f247",
+        "lamport_ts": 9,
+        "wall_ms": 3050.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:35.213936Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "9fe2e170-f28a-4d56-805c-fc08c4d8abf3",
+          "deviation_score": 389.34870028761156
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "45092bb3-c411-4a1d-9aca-e181103ec4d8",
+        "lamport_ts": 58,
+        "wall_ms": 3050.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.215270Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "9fe2e170-f28a-4d56-805c-fc08c4d8abf3",
+          "threat_id": "8c911874-00d4-4cb0-b74e-5902b88ca14f",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "9fe2e170-f28a-4d56-805c-fc08c4d8abf3"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.00",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "a3313af2-b481-418f-b21e-13d00b14aa75",
+        "lamport_ts": 59,
+        "wall_ms": 3050.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.215303Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "public-facing",
+          "threat_id": "8c911874-00d4-4cb0-b74e-5902b88ca14f",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "8c911874-00d4-4cb0-b74e-5902b88ca14f",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "6cf4f9e1-07b7-4a67-bbfe-644943324153",
+        "lamport_ts": 60,
+        "wall_ms": 3050.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.215321Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "threat_id": "8c911874-00d4-4cb0-b74e-5902b88ca14f",
+          "resolution_id": "fcb82e89-3683-4438-be42-95708449485e",
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "fc87979c-fbf2-4269-bede-dfc11654d07c",
+        "lamport_ts": 60,
+        "wall_ms": 3050.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.239682Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "2b314747-5bd6-4987-927e-3bdf1a1e1a83"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "c14300de-8109-4c3a-9321-67271db8335a",
+        "lamport_ts": 61,
+        "wall_ms": 3050.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.241039Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "9fe2e170-f28a-4d56-805c-fc08c4d8abf3",
+          "threat_id": "13eec3b7-24eb-4a41-828c-11a283ba9e8f",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "9fe2e170-f28a-4d56-805c-fc08c4d8abf3"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.00",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "3d1bbef9-10a0-4356-a1c2-98df5c3983a8",
+        "lamport_ts": 62,
+        "wall_ms": 3050.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.241068Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "internal",
+          "threat_id": "13eec3b7-24eb-4a41-828c-11a283ba9e8f",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "13eec3b7-24eb-4a41-828c-11a283ba9e8f",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "92bb77c5-1da7-431d-957e-cb93afb9b29d",
+        "lamport_ts": 63,
+        "wall_ms": 3050.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.241127Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "threat_id": "13eec3b7-24eb-4a41-828c-11a283ba9e8f",
+          "resolution_id": "6a3beb97-ad93-4f54-b787-2f79063a0613",
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "c75a48e1-44d4-4c32-8d24-0ae6978e535a",
+        "lamport_ts": 61,
+        "wall_ms": 3050.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.241152Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "threat_model_update",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "c542ee88-9d05-4c02-89fd-6f53efea1740",
+        "lamport_ts": 66,
+        "wall_ms": 3050.0,
+        "event_type": "AUCTION_COMPLETED",
+        "timestamp": "2026-06-06T13:02:35.241185Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "bids": {
+            "RCA:public-facing": 0.99,
+            "RCA:internal": 0.99
+          },
+          "granted": [
+            "RCA:public-facing",
+            "RCA:internal"
+          ],
+          "denied": [],
+          "slots": 4,
+          "notify_latency_ms": 0
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "ac1adfc5-298d-4bcc-b9dd-ac31b0e1d124",
+        "lamport_ts": 66,
+        "wall_ms": 3050.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:35.241191Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "reclaim"
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "cbe9a6d7-8bac-4e8f-9307-06d64ddcd0ba",
+        "lamport_ts": 63,
+        "wall_ms": 3100.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.265122Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "8c911874-00d4-4cb0-b74e-5902b88ca14f"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "c652d931-f596-4201-9237-a946a35f3b60",
+        "lamport_ts": 63,
+        "wall_ms": 3100.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.289319Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "13eec3b7-24eb-4a41-828c-11a283ba9e8f"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "7627487c-34d6-41af-96f5-8f154e254f3e",
+        "lamport_ts": 6,
+        "wall_ms": 3200.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:35.290173Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "alert",
+          "segment": "internal",
+          "alert_id": "16addde7-526e-41ce-a79f-18b96cfc384a",
+          "deviation_score": 3.7666419186475437
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "5a81c9c3-81dc-49d0-85f3-368891fa021c",
+        "lamport_ts": 66,
+        "wall_ms": 3200.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.291496Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "16addde7-526e-41ce-a79f-18b96cfc384a",
+          "threat_id": "630e8f32-43ec-420e-94bd-59d6d974cb76",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "16addde7-526e-41ce-a79f-18b96cfc384a"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.01",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "d4613ea2-5a90-48d1-9a65-8748d965c2a4",
+        "lamport_ts": 66,
+        "wall_ms": 3250.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.293190Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "16addde7-526e-41ce-a79f-18b96cfc384a",
+          "threat_id": "340567cb-30b8-404d-a4b8-d1f284a78959",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 50,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "16addde7-526e-41ce-a79f-18b96cfc384a"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.72 novelty=0.17",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "8b67bc96-75d3-4ea4-8ada-d8e2553d1801",
+        "lamport_ts": 10,
+        "wall_ms": 3350.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:35.294296Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "bfe0553c-a789-430b-8127-ec615ba8a66f",
+          "deviation_score": 388.52473530906684
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "92594ca6-8ba3-46df-9897-0223c46bd458",
+        "lamport_ts": 68,
+        "wall_ms": 3350.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.295904Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "bfe0553c-a789-430b-8127-ec615ba8a66f",
+          "threat_id": "ae72370c-ef3c-40fd-9fc2-19adde275b9b",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "bfe0553c-a789-430b-8127-ec615ba8a66f"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.00",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "9db0ed7e-f275-4aec-9784-a42ba4da36d4",
+        "lamport_ts": 69,
+        "wall_ms": 3350.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.295943Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "public-facing",
+          "threat_id": "ae72370c-ef3c-40fd-9fc2-19adde275b9b",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "ae72370c-ef3c-40fd-9fc2-19adde275b9b",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "30360d28-2fd7-41bd-82ff-1e60445c3076",
+        "lamport_ts": 70,
+        "wall_ms": 3350.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.295961Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "threat_id": "ae72370c-ef3c-40fd-9fc2-19adde275b9b",
+          "resolution_id": "a3bd59fa-57c2-405c-9538-2839b32364ef",
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "37fa87a6-9020-4349-9e99-0eab9f415494",
+        "lamport_ts": 70,
+        "wall_ms": 3350.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.320356Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "13eec3b7-24eb-4a41-828c-11a283ba9e8f"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "99cfbaa8-2227-4ac8-a2c4-eff8155e8727",
+        "lamport_ts": 71,
+        "wall_ms": 3350.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.321724Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "bfe0553c-a789-430b-8127-ec615ba8a66f",
+          "threat_id": "789c127b-7d33-481a-965f-5cf60609b830",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "bfe0553c-a789-430b-8127-ec615ba8a66f"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.00",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "3b80776d-5ec4-43b1-b7bb-1fa6507d9e39",
+        "lamport_ts": 72,
+        "wall_ms": 3350.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.321764Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "internal",
+          "threat_id": "789c127b-7d33-481a-965f-5cf60609b830",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "789c127b-7d33-481a-965f-5cf60609b830",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "e28802da-454c-4271-b97d-b4f876a13ac5",
+        "lamport_ts": 73,
+        "wall_ms": 3350.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.321782Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "threat_id": "789c127b-7d33-481a-965f-5cf60609b830",
+          "resolution_id": "0cb03ec4-bee7-4a43-810a-0b4c024f2ac7",
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "c1019eac-272a-4d4d-828a-11a7a8116244",
+        "lamport_ts": 71,
+        "wall_ms": 3350.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.321801Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "threat_model_update",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "527d04aa-8b69-476b-a3d3-71ad360f441e",
+        "lamport_ts": 76,
+        "wall_ms": 3350.0,
+        "event_type": "AUCTION_COMPLETED",
+        "timestamp": "2026-06-06T13:02:35.321842Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "bids": {
+            "RCA:public-facing": 0.99,
+            "RCA:internal": 0.99
+          },
+          "granted": [
+            "RCA:public-facing",
+            "RCA:internal"
+          ],
+          "denied": [],
+          "slots": 4,
+          "notify_latency_ms": 0
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "d54556c6-2951-4dfb-8c42-ecf9529325be",
+        "lamport_ts": 76,
+        "wall_ms": 3350.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:35.321848Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "reclaim"
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "32c27e41-79f6-47e5-be41-7e665bafa33c",
+        "lamport_ts": 73,
+        "wall_ms": 3400.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.346468Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "ae72370c-ef3c-40fd-9fc2-19adde275b9b"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "c6a313f6-8797-46a7-ba33-26b8488a4a94",
+        "lamport_ts": 73,
+        "wall_ms": 3400.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.370841Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "789c127b-7d33-481a-965f-5cf60609b830"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "21422bbb-037d-4a0a-aaff-83d50a67c197",
+        "lamport_ts": 7,
+        "wall_ms": 3600.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:35.372355Z",
+        "agent_id": "TMA:internal",
+        "agent_type": "TMA",
+        "segment": "internal",
+        "payload": {
+          "signal": "alert",
+          "segment": "internal",
+          "alert_id": "fc7ec3ca-880c-4145-aad4-1beb93ae09d8",
+          "deviation_score": 3.0500479341485116
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "0f4dfcef-6868-46ed-bcab-8994055f9f86",
+        "lamport_ts": 76,
+        "wall_ms": 3600.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.373718Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "fc7ec3ca-880c-4145-aad4-1beb93ae09d8",
+          "threat_id": "9d422738-e6d9-4693-9a73-3515b0b40774",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "fc7ec3ca-880c-4145-aad4-1beb93ae09d8"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.00",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "c13c1e02-a328-4a0b-8d45-bc0fde2faa8c",
+        "lamport_ts": 11,
+        "wall_ms": 3650.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:35.374110Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "dabcce25-f7f0-44de-bdc6-2cfc6739bdc8",
+          "deviation_score": 393.07228812976103
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "1c76f083-63ea-4ef4-bb98-3867216b6066",
+        "lamport_ts": 77,
+        "wall_ms": 3650.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.375443Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "fc7ec3ca-880c-4145-aad4-1beb93ae09d8",
+          "threat_id": "89227ed3-1284-4473-ad34-64dae292dbf1",
+          "classification": "NORMAL",
+          "attack_type": "NOVEL",
+          "severity": 0.0,
+          "reported": false
+        },
+        "latency_ms": 50,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "fc7ec3ca-880c-4145-aad4-1beb93ae09d8"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=0.75 novelty=0.17",
+          "action": "DROP_NORMAL"
+        }
+      },
+      {
+        "event_id": "4faacc13-41b6-4e39-be94-cdbadddc2ef7",
+        "lamport_ts": 78,
+        "wall_ms": 3650.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.376788Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "dabcce25-f7f0-44de-bdc6-2cfc6739bdc8",
+          "threat_id": "84dc330d-a15e-4d50-8c23-3323918f4182",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "dabcce25-f7f0-44de-bdc6-2cfc6739bdc8"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.01",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "3e28417a-c300-4de0-886f-414de4590a87",
+        "lamport_ts": 79,
+        "wall_ms": 3650.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.376821Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "public-facing",
+          "threat_id": "84dc330d-a15e-4d50-8c23-3323918f4182",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "84dc330d-a15e-4d50-8c23-3323918f4182",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "b70624d0-96b2-4a77-8a17-d927f30bc84a",
+        "lamport_ts": 80,
+        "wall_ms": 3650.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.376849Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "threat_id": "84dc330d-a15e-4d50-8c23-3323918f4182",
+          "resolution_id": "edf3a2b4-59dc-4104-a92c-5019bf6d1e3e",
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "937602fb-ff0d-446d-b0bf-ef5ef0ba7af7",
+        "lamport_ts": 80,
+        "wall_ms": 3650.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.401217Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "789c127b-7d33-481a-965f-5cf60609b830"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "12867082-765a-44d4-9f75-491f079ad0ad",
+        "lamport_ts": 81,
+        "wall_ms": 3650.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.402558Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "dabcce25-f7f0-44de-bdc6-2cfc6739bdc8",
+          "threat_id": "dfaf7e15-ca36-440b-8fce-1694f7e5c3bd",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "dabcce25-f7f0-44de-bdc6-2cfc6739bdc8"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.01",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "29744805-0fef-46ca-85e1-6692bf0e6611",
+        "lamport_ts": 82,
+        "wall_ms": 3650.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.402585Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "internal",
+          "threat_id": "dfaf7e15-ca36-440b-8fce-1694f7e5c3bd",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "dfaf7e15-ca36-440b-8fce-1694f7e5c3bd",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "d1b911a1-7c4e-4395-a268-b45249299e74",
+        "lamport_ts": 83,
+        "wall_ms": 3650.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.402600Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "threat_id": "dfaf7e15-ca36-440b-8fce-1694f7e5c3bd",
+          "resolution_id": "4e910cfd-61ea-4a9f-a630-bdde632db82c",
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "89863575-3f2e-4781-8ba1-6d67bcf2c1ca",
+        "lamport_ts": 81,
+        "wall_ms": 3650.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.402617Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "threat_model_update",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "7210f1d2-c4a6-4e9e-8ccf-857c61ddfb36",
+        "lamport_ts": 86,
+        "wall_ms": 3650.0,
+        "event_type": "AUCTION_COMPLETED",
+        "timestamp": "2026-06-06T13:02:35.402645Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "bids": {
+            "RCA:public-facing": 0.99,
+            "RCA:internal": 0.99
+          },
+          "granted": [
+            "RCA:public-facing",
+            "RCA:internal"
+          ],
+          "denied": [],
+          "slots": 4,
+          "notify_latency_ms": 0
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "655cc4a9-23d0-490e-a4a8-95f0900ab27f",
+        "lamport_ts": 86,
+        "wall_ms": 3650.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:35.402650Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "reclaim"
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "e1adee8c-8c86-40db-a181-1dfb5b6f73b5",
+        "lamport_ts": 83,
+        "wall_ms": 3700.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.427270Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "84dc330d-a15e-4d50-8c23-3323918f4182"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "2201ac4f-b358-449e-8a53-73527d2d96c8",
+        "lamport_ts": 83,
+        "wall_ms": 3700.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.451761Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "dfaf7e15-ca36-440b-8fce-1694f7e5c3bd"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "7817ab6e-a099-4c21-8664-8a1176f404c4",
+        "lamport_ts": 12,
+        "wall_ms": 3950.0,
+        "event_type": "ALERT_PUBLISHED",
+        "timestamp": "2026-06-06T13:02:35.453621Z",
+        "agent_id": "TMA:public-facing",
+        "agent_type": "TMA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "alert",
+          "segment": "public-facing",
+          "alert_id": "c94633e1-31ee-45d7-82bc-22a6f5996a1f",
+          "deviation_score": 391.40002082023113
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "0cdb3728-6259-44ea-ad0d-1642ef9933e6",
+        "lamport_ts": 87,
+        "wall_ms": 3950.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.454948Z",
+        "agent_id": "ACA:public-facing",
+        "agent_type": "ACA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "c94633e1-31ee-45d7-82bc-22a6f5996a1f",
+          "threat_id": "4195b0cb-bf6a-405b-9147-236358c7787a",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "c94633e1-31ee-45d7-82bc-22a6f5996a1f"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.04",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "bf1bf699-0b33-40fc-a106-789d6dfbc0ea",
+        "lamport_ts": 88,
+        "wall_ms": 3950.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.454980Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "public-facing",
+          "threat_id": "4195b0cb-bf6a-405b-9147-236358c7787a",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "4195b0cb-bf6a-405b-9147-236358c7787a",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "55b0c842-f75e-45fb-b310-0b8fbae3a1e5",
+        "lamport_ts": 89,
+        "wall_ms": 3950.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.454997Z",
+        "agent_id": "RCA:public-facing",
+        "agent_type": "RCA",
+        "segment": "public-facing",
+        "payload": {
+          "threat_id": "4195b0cb-bf6a-405b-9147-236358c7787a",
+          "resolution_id": "56db31e1-f0a1-483a-b1c9-235e5d56782c",
+          "segment": "public-facing"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "7007c943-52d0-4955-8e2d-c6e6a0effe12",
+        "lamport_ts": 89,
+        "wall_ms": 3950.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.479319Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "online_update",
+          "improvement_rate": 0.0,
+          "threat_id": "dfaf7e15-ca36-440b-8fce-1694f7e5c3bd"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "a9201c25-a8e5-4be8-958b-faca246d9998",
+        "lamport_ts": 90,
+        "wall_ms": 3950.0,
+        "event_type": "THREAT_CLASSIFIED",
+        "timestamp": "2026-06-06T13:02:35.480621Z",
+        "agent_id": "ACA:internal",
+        "agent_type": "ACA",
+        "segment": "internal",
+        "payload": {
+          "signal": "classify",
+          "alert_id": "c94633e1-31ee-45d7-82bc-22a6f5996a1f",
+          "threat_id": "6a9ce1a3-4c1e-4979-8558-2681ef70ba50",
+          "classification": "CONFIRMED_THREAT",
+          "attack_type": "DDOS",
+          "severity": 0.99,
+          "reported": true
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "alert_id": "c94633e1-31ee-45d7-82bc-22a6f5996a1f"
+          },
+          "plan_selected": "classify",
+          "reasoning": "confidence=1.00 novelty=0.04",
+          "action": "PUBLISH_THREAT_REPORT"
+        }
+      },
+      {
+        "event_id": "2805d941-0d26-42fe-addf-61553bcca054",
+        "lamport_ts": 91,
+        "wall_ms": 3950.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.480660Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "signal": "response",
+          "action": "BLOCK",
+          "severity": 0.99,
+          "segment": "internal",
+          "threat_id": "6a9ce1a3-4c1e-4979-8558-2681ef70ba50",
+          "proportionality_score": 0.85,
+          "effectiveness": 0.7
+        },
+        "latency_ms": 0,
+        "decision_trace": {
+          "inputs": {
+            "threat_id": "6a9ce1a3-4c1e-4979-8558-2681ef70ba50",
+            "severity": 0.99
+          },
+          "plan_selected": "respond",
+          "reasoning": "least-disruptive effective action for sev=0.99",
+          "action": "BLOCK"
+        }
+      },
+      {
+        "event_id": "f5b7f23a-34c9-4973-8089-fb928ac59fc9",
+        "lamport_ts": 92,
+        "wall_ms": 3950.0,
+        "event_type": "INCIDENT_RESOLVED",
+        "timestamp": "2026-06-06T13:02:35.480680Z",
+        "agent_id": "RCA:internal",
+        "agent_type": "RCA",
+        "segment": "internal",
+        "payload": {
+          "threat_id": "6a9ce1a3-4c1e-4979-8558-2681ef70ba50",
+          "resolution_id": "59f1a069-4a65-4fec-8214-539011be8992",
+          "segment": "internal"
+        },
+        "latency_ms": null,
+        "decision_trace": null
+      },
+      {
+        "event_id": "5df4a598-670f-45be-839a-5f4105fd4d8a",
+        "lamport_ts": 90,
+        "wall_ms": 3950.0,
+        "event_type": "ACTION_EXECUTED",
+        "timestamp": "2026-06-06T13:02:35.480699Z",
+        "agent_id": "TIA:global",
+        "agent_type": "TIA",
+        "segment": null,
+        "payload": {
+          "signal": "threat_model_update",
+          "segments": [
+            "internal",
+            "public-facing"
+          ]
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "79fb9afd-9205-4a44-a5e5-9e0d1d4e0291",
+        "lamport_ts": 95,
+        "wall_ms": 3950.0,
+        "event_type": "AUCTION_COMPLETED",
+        "timestamp": "2026-06-06T13:02:35.480730Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "bids": {
+            "RCA:public-facing": 0.99,
+            "RCA:internal": 0.99
+          },
+          "granted": [
+            "RCA:public-facing",
+            "RCA:internal"
+          ],
+          "denied": [],
+          "slots": 4,
+          "notify_latency_ms": 0
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      },
+      {
+        "event_id": "ea08d04e-c4d0-4679-8c23-6f58599ea21e",
+        "lamport_ts": 95,
+        "wall_ms": 3950.0,
+        "event_type": "RESOURCE_ALLOCATED",
+        "timestamp": "2026-06-06T13:02:35.480736Z",
+        "agent_id": "RAA:global",
+        "agent_type": "RAA",
+        "segment": null,
+        "payload": {
+          "signal": "reclaim"
+        },
+        "latency_ms": 0,
+        "decision_trace": null
+      }
+    ],
+    "metrics": {
+      "dr": 1.0,
+      "fpr": 0.0,
+      "mttr_alert_ms": 0.0,
+      "mttr_response_ms": 0.0,
+      "availability": 1.0,
+      "resource_overhead": 0.0,
+      "social_welfare": 0.9651,
+      "attacker_utility": 0.0,
+      "coalition_ms": 0.0,
+      "evasion_rate": 0.0,
+      "concurrent_incidents": 18
+    }
+  },
+  "validation": [
+    {
+      "name": "Scenario 1 - Single DDoS",
+      "passed": true,
+      "social_welfare": 0.9625,
+      "criteria": {
+        "DR>90%": true,
+        "MTTR_response<1000ms": true,
+        "availability>99%": true,
+        "U_ATK<0.2": true,
+        "SW>=0.80": true
+      },
+      "constraints": [
+        {
+          "fr_id": "FR-01",
+          "status": "PASS",
+          "description": "TMA samples >=10/s",
+          "observed": "min=100.0"
+        },
+        {
+          "fr_id": "FR-02",
+          "status": "PASS",
+          "description": "alerts only on >2 sigma",
+          "observed": "0/10 violate"
+        },
+        {
+          "fr_id": "FR-03",
+          "status": "PASS",
+          "description": "TMA alert <100ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-04",
+          "status": "PASS",
+          "description": "baseline update <=60s",
+          "observed": "max gap=1050.0ms"
+        },
+        {
+          "fr_id": "FR-05",
+          "status": "PASS",
+          "description": "ACA classify <200ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-06",
+          "status": "PASS",
+          "description": "confirmed severity in [0,1]",
+          "observed": "0/1 violate"
+        },
+        {
+          "fr_id": "FR-07",
+          "status": "PASS",
+          "description": "confirmed/suspicious reported",
+          "observed": "0/7 violate"
+        },
+        {
+          "fr_id": "FR-08",
+          "status": "PASS",
+          "description": "online learning after resolution",
+          "observed": "1 updates"
+        },
+        {
+          "fr_id": "FR-09",
+          "status": "PASS",
+          "description": "FPR <10%",
+          "observed": "fpr=0.0000"
+        },
+        {
+          "fr_id": "FR-10",
+          "status": "PASS",
+          "description": "RCA respond <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-11",
+          "status": "NA",
+          "description": "no quarantine without majority",
+          "observed": "no quarantines"
+        },
+        {
+          "fr_id": "FR-12",
+          "status": "PASS",
+          "description": "responses have decision trace",
+          "observed": "0/1 violate"
+        },
+        {
+          "fr_id": "FR-13",
+          "status": "PASS",
+          "description": "proportionality >=0.7",
+          "observed": "0/1 violate"
+        },
+        {
+          "fr_id": "FR-14",
+          "status": "PASS",
+          "description": "resolution notice present",
+          "observed": "0/1 violate"
+        },
+        {
+          "fr_id": "FR-15",
+          "status": "PASS",
+          "description": "TIA model update <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-16",
+          "status": "NA",
+          "description": "correlation <1000ms",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-17",
+          "status": "NA",
+          "description": "multi-segment -> coalition",
+          "observed": "no correlation"
+        },
+        {
+          "fr_id": "FR-18",
+          "status": "PASS",
+          "description": "priority list <=1s",
+          "observed": "max gap=1000.0ms"
+        },
+        {
+          "fr_id": "FR-19",
+          "status": "PASS",
+          "description": "auction <300ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-20",
+          "status": "PASS",
+          "description": "auction grants top severity",
+          "observed": "0 mis-allocated"
+        },
+        {
+          "fr_id": "FR-21",
+          "status": "PASS",
+          "description": "auction notify <100ms",
+          "observed": "0/1 violate"
+        },
+        {
+          "fr_id": "FR-22",
+          "status": "PASS",
+          "description": "reclaim <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-23",
+          "status": "PASS",
+          "description": "overhead <40%",
+          "observed": "resource_overhead=0.0000"
+        },
+        {
+          "fr_id": "FR-24",
+          "status": "PASS",
+          "description": "DDoS randomized IPs",
+          "observed": "0 under-diverse"
+        },
+        {
+          "fr_id": "FR-25",
+          "status": "NA",
+          "description": "scan pseudo-random order",
+          "observed": "no scans"
+        },
+        {
+          "fr_id": "FR-26",
+          "status": "NA",
+          "description": "zero-day detected as novel",
+          "observed": "no zero-day"
+        },
+        {
+          "fr_id": "FR-27",
+          "status": "PASS",
+          "description": "attackers log actions",
+          "observed": "1 logged"
+        },
+        {
+          "fr_id": "FR-28",
+          "status": "PASS",
+          "description": "attacker (in)dependence",
+          "observed": "independent"
+        },
+        {
+          "fr_id": "FR-29",
+          "status": "PASS",
+          "description": "DR >=90%",
+          "observed": "dr=1.0000"
+        },
+        {
+          "fr_id": "FR-30",
+          "status": "PASS",
+          "description": "MTTR_response <1000ms",
+          "observed": "mttr_response_ms=0.0000"
+        },
+        {
+          "fr_id": "FR-31",
+          "status": "PASS",
+          "description": "availability >99%",
+          "observed": "availability=1.0000"
+        },
+        {
+          "fr_id": "FR-32",
+          "status": "NA",
+          "description": "rejections carry a reason",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-33",
+          "status": "PASS",
+          "description": ">=5 concurrent incidents",
+          "observed": "7 handled"
+        },
+        {
+          "fr_id": "FR-34",
+          "status": "NA",
+          "description": "coverage reassigned <2s",
+          "observed": "no failures"
+        }
+      ]
+    },
+    {
+      "name": "Scenario 2 - Multi-Segment",
+      "passed": true,
+      "social_welfare": 0.9651,
+      "criteria": {
+        "coalition<1s": true,
+        "evasion<0.15": true,
+        "SW>=0.80": true
+      },
+      "constraints": [
+        {
+          "fr_id": "FR-01",
+          "status": "PASS",
+          "description": "TMA samples >=10/s",
+          "observed": "min=100.0"
+        },
+        {
+          "fr_id": "FR-02",
+          "status": "PASS",
+          "description": "alerts only on >2 sigma",
+          "observed": "0/19 violate"
+        },
+        {
+          "fr_id": "FR-03",
+          "status": "PASS",
+          "description": "TMA alert <100ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-04",
+          "status": "PASS",
+          "description": "baseline update <=60s",
+          "observed": "max gap=1000.0ms"
+        },
+        {
+          "fr_id": "FR-05",
+          "status": "PASS",
+          "description": "ACA classify <200ms",
+          "observed": "max=50ms"
+        },
+        {
+          "fr_id": "FR-06",
+          "status": "PASS",
+          "description": "confirmed severity in [0,1]",
+          "observed": "0/17 violate"
+        },
+        {
+          "fr_id": "FR-07",
+          "status": "PASS",
+          "description": "confirmed/suspicious reported",
+          "observed": "0/18 violate"
+        },
+        {
+          "fr_id": "FR-08",
+          "status": "PASS",
+          "description": "online learning after resolution",
+          "observed": "23 updates"
+        },
+        {
+          "fr_id": "FR-09",
+          "status": "PASS",
+          "description": "FPR <10%",
+          "observed": "fpr=0.0000"
+        },
+        {
+          "fr_id": "FR-10",
+          "status": "PASS",
+          "description": "RCA respond <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-11",
+          "status": "NA",
+          "description": "no quarantine without majority",
+          "observed": "no quarantines"
+        },
+        {
+          "fr_id": "FR-12",
+          "status": "PASS",
+          "description": "responses have decision trace",
+          "observed": "0/17 violate"
+        },
+        {
+          "fr_id": "FR-13",
+          "status": "PASS",
+          "description": "proportionality >=0.7",
+          "observed": "0/17 violate"
+        },
+        {
+          "fr_id": "FR-14",
+          "status": "PASS",
+          "description": "resolution notice present",
+          "observed": "0/17 violate"
+        },
+        {
+          "fr_id": "FR-15",
+          "status": "PASS",
+          "description": "TIA model update <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-16",
+          "status": "PASS",
+          "description": "correlation <1000ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-17",
+          "status": "PASS",
+          "description": "multi-segment -> coalition",
+          "observed": "1 coalitions"
+        },
+        {
+          "fr_id": "FR-18",
+          "status": "PASS",
+          "description": "priority list <=1s",
+          "observed": "max gap=1000.0ms"
+        },
+        {
+          "fr_id": "FR-19",
+          "status": "PASS",
+          "description": "auction <300ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-20",
+          "status": "PASS",
+          "description": "auction grants top severity",
+          "observed": "0 mis-allocated"
+        },
+        {
+          "fr_id": "FR-21",
+          "status": "PASS",
+          "description": "auction notify <100ms",
+          "observed": "0/9 violate"
+        },
+        {
+          "fr_id": "FR-22",
+          "status": "PASS",
+          "description": "reclaim <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-23",
+          "status": "PASS",
+          "description": "overhead <40%",
+          "observed": "resource_overhead=0.0000"
+        },
+        {
+          "fr_id": "FR-24",
+          "status": "PASS",
+          "description": "DDoS randomized IPs",
+          "observed": "0 under-diverse"
+        },
+        {
+          "fr_id": "FR-25",
+          "status": "NA",
+          "description": "scan pseudo-random order",
+          "observed": "no scans"
+        },
+        {
+          "fr_id": "FR-26",
+          "status": "NA",
+          "description": "zero-day detected as novel",
+          "observed": "no zero-day"
+        },
+        {
+          "fr_id": "FR-27",
+          "status": "PASS",
+          "description": "attackers log actions",
+          "observed": "2 logged"
+        },
+        {
+          "fr_id": "FR-28",
+          "status": "PASS",
+          "description": "attacker (in)dependence",
+          "observed": "spread=0.0ms"
+        },
+        {
+          "fr_id": "FR-29",
+          "status": "PASS",
+          "description": "DR >=90%",
+          "observed": "dr=1.0000"
+        },
+        {
+          "fr_id": "FR-30",
+          "status": "PASS",
+          "description": "MTTR_response <1000ms",
+          "observed": "mttr_response_ms=0.0000"
+        },
+        {
+          "fr_id": "FR-31",
+          "status": "PASS",
+          "description": "availability >99%",
+          "observed": "availability=1.0000"
+        },
+        {
+          "fr_id": "FR-32",
+          "status": "NA",
+          "description": "rejections carry a reason",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-33",
+          "status": "PASS",
+          "description": ">=5 concurrent incidents",
+          "observed": "18 handled"
+        },
+        {
+          "fr_id": "FR-34",
+          "status": "NA",
+          "description": "coverage reassigned <2s",
+          "observed": "no failures"
+        }
+      ]
+    },
+    {
+      "name": "Scenario 3 - Resource Contention",
+      "passed": true,
+      "social_welfare": 0.9335,
+      "criteria": {
+        "auction<300ms": true,
+        "auction_top_severity": true,
+        "overhead<=40%": true,
+        ">=5 incidents": true,
+        "SW>=0.80": true
+      },
+      "constraints": [
+        {
+          "fr_id": "FR-01",
+          "status": "PASS",
+          "description": "TMA samples >=10/s",
+          "observed": "min=100.0"
+        },
+        {
+          "fr_id": "FR-02",
+          "status": "PASS",
+          "description": "alerts only on >2 sigma",
+          "observed": "0/16 violate"
+        },
+        {
+          "fr_id": "FR-03",
+          "status": "PASS",
+          "description": "TMA alert <100ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-04",
+          "status": "PASS",
+          "description": "baseline update <=60s",
+          "observed": "max gap=1050.0ms"
+        },
+        {
+          "fr_id": "FR-05",
+          "status": "PASS",
+          "description": "ACA classify <200ms",
+          "observed": "max=50ms"
+        },
+        {
+          "fr_id": "FR-06",
+          "status": "PASS",
+          "description": "confirmed severity in [0,1]",
+          "observed": "0/16 violate"
+        },
+        {
+          "fr_id": "FR-07",
+          "status": "PASS",
+          "description": "confirmed/suspicious reported",
+          "observed": "0/16 violate"
+        },
+        {
+          "fr_id": "FR-08",
+          "status": "PASS",
+          "description": "online learning after resolution",
+          "observed": "8 updates"
+        },
+        {
+          "fr_id": "FR-09",
+          "status": "PASS",
+          "description": "FPR <10%",
+          "observed": "fpr=0.0000"
+        },
+        {
+          "fr_id": "FR-10",
+          "status": "PASS",
+          "description": "RCA respond <500ms",
+          "observed": "max=50ms"
+        },
+        {
+          "fr_id": "FR-11",
+          "status": "PASS",
+          "description": "no quarantine without majority",
+          "observed": "0 unauthorized"
+        },
+        {
+          "fr_id": "FR-12",
+          "status": "PASS",
+          "description": "responses have decision trace",
+          "observed": "0/6 violate"
+        },
+        {
+          "fr_id": "FR-13",
+          "status": "PASS",
+          "description": "proportionality >=0.7",
+          "observed": "0/6 violate"
+        },
+        {
+          "fr_id": "FR-14",
+          "status": "PASS",
+          "description": "resolution notice present",
+          "observed": "0/6 violate"
+        },
+        {
+          "fr_id": "FR-15",
+          "status": "PASS",
+          "description": "TIA model update <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-16",
+          "status": "PASS",
+          "description": "correlation <1000ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-17",
+          "status": "PASS",
+          "description": "multi-segment -> coalition",
+          "observed": "1 coalitions"
+        },
+        {
+          "fr_id": "FR-18",
+          "status": "PASS",
+          "description": "priority list <=1s",
+          "observed": "max gap=1000.0ms"
+        },
+        {
+          "fr_id": "FR-19",
+          "status": "PASS",
+          "description": "auction <300ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-20",
+          "status": "PASS",
+          "description": "auction grants top severity",
+          "observed": "0 mis-allocated"
+        },
+        {
+          "fr_id": "FR-21",
+          "status": "PASS",
+          "description": "auction notify <100ms",
+          "observed": "0/1 violate"
+        },
+        {
+          "fr_id": "FR-22",
+          "status": "PASS",
+          "description": "reclaim <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-23",
+          "status": "PASS",
+          "description": "overhead <40%",
+          "observed": "resource_overhead=0.0000"
+        },
+        {
+          "fr_id": "FR-24",
+          "status": "NA",
+          "description": "DDoS randomized IPs",
+          "observed": "no DDoS"
+        },
+        {
+          "fr_id": "FR-25",
+          "status": "NA",
+          "description": "scan pseudo-random order",
+          "observed": "no scans"
+        },
+        {
+          "fr_id": "FR-26",
+          "status": "NA",
+          "description": "zero-day detected as novel",
+          "observed": "no zero-day"
+        },
+        {
+          "fr_id": "FR-27",
+          "status": "PASS",
+          "description": "attackers log actions",
+          "observed": "4 logged"
+        },
+        {
+          "fr_id": "FR-28",
+          "status": "PASS",
+          "description": "attacker (in)dependence",
+          "observed": "independent"
+        },
+        {
+          "fr_id": "FR-29",
+          "status": "PASS",
+          "description": "DR >=90%",
+          "observed": "dr=1.0000"
+        },
+        {
+          "fr_id": "FR-30",
+          "status": "PASS",
+          "description": "MTTR_response <1000ms",
+          "observed": "mttr_response_ms=33.3300"
+        },
+        {
+          "fr_id": "FR-31",
+          "status": "PASS",
+          "description": "availability >99%",
+          "observed": "availability=0.9992"
+        },
+        {
+          "fr_id": "FR-32",
+          "status": "NA",
+          "description": "rejections carry a reason",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-33",
+          "status": "PASS",
+          "description": ">=5 concurrent incidents",
+          "observed": "16 handled"
+        },
+        {
+          "fr_id": "FR-34",
+          "status": "NA",
+          "description": "coverage reassigned <2s",
+          "observed": "no failures"
+        }
+      ]
+    },
+    {
+      "name": "Scenario 4 - Zero-Day",
+      "passed": true,
+      "social_welfare": 1.0,
+      "criteria": {
+        "novel_detected": true,
+        "FPR<10%": true,
+        "SW>=0.80": true
+      },
+      "constraints": [
+        {
+          "fr_id": "FR-01",
+          "status": "PASS",
+          "description": "TMA samples >=10/s",
+          "observed": "min=100.0"
+        },
+        {
+          "fr_id": "FR-02",
+          "status": "PASS",
+          "description": "alerts only on >2 sigma",
+          "observed": "0/7 violate"
+        },
+        {
+          "fr_id": "FR-03",
+          "status": "PASS",
+          "description": "TMA alert <100ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-04",
+          "status": "PASS",
+          "description": "baseline update <=60s",
+          "observed": "max gap=1000.0ms"
+        },
+        {
+          "fr_id": "FR-05",
+          "status": "PASS",
+          "description": "ACA classify <200ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-06",
+          "status": "NA",
+          "description": "confirmed severity in [0,1]",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-07",
+          "status": "PASS",
+          "description": "confirmed/suspicious reported",
+          "observed": "0/7 violate"
+        },
+        {
+          "fr_id": "FR-08",
+          "status": "NA",
+          "description": "online learning after resolution",
+          "observed": "no resolutions"
+        },
+        {
+          "fr_id": "FR-09",
+          "status": "PASS",
+          "description": "FPR <10%",
+          "observed": "fpr=0.0000"
+        },
+        {
+          "fr_id": "FR-10",
+          "status": "NA",
+          "description": "RCA respond <500ms",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-11",
+          "status": "NA",
+          "description": "no quarantine without majority",
+          "observed": "no quarantines"
+        },
+        {
+          "fr_id": "FR-12",
+          "status": "NA",
+          "description": "responses have decision trace",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-13",
+          "status": "NA",
+          "description": "proportionality >=0.7",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-14",
+          "status": "NA",
+          "description": "resolution notice present",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-15",
+          "status": "PASS",
+          "description": "TIA model update <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-16",
+          "status": "NA",
+          "description": "correlation <1000ms",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-17",
+          "status": "NA",
+          "description": "multi-segment -> coalition",
+          "observed": "no correlation"
+        },
+        {
+          "fr_id": "FR-18",
+          "status": "PASS",
+          "description": "priority list <=1s",
+          "observed": "max gap=1000.0ms"
+        },
+        {
+          "fr_id": "FR-19",
+          "status": "NA",
+          "description": "auction <300ms",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-20",
+          "status": "NA",
+          "description": "auction grants top severity",
+          "observed": "no auctions"
+        },
+        {
+          "fr_id": "FR-21",
+          "status": "NA",
+          "description": "auction notify <100ms",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-22",
+          "status": "NA",
+          "description": "reclaim <500ms",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-23",
+          "status": "PASS",
+          "description": "overhead <40%",
+          "observed": "resource_overhead=0.0000"
+        },
+        {
+          "fr_id": "FR-24",
+          "status": "NA",
+          "description": "DDoS randomized IPs",
+          "observed": "no DDoS"
+        },
+        {
+          "fr_id": "FR-25",
+          "status": "NA",
+          "description": "scan pseudo-random order",
+          "observed": "no scans"
+        },
+        {
+          "fr_id": "FR-26",
+          "status": "PASS",
+          "description": "zero-day detected as novel",
+          "observed": "7 novel"
+        },
+        {
+          "fr_id": "FR-27",
+          "status": "PASS",
+          "description": "attackers log actions",
+          "observed": "1 logged"
+        },
+        {
+          "fr_id": "FR-28",
+          "status": "PASS",
+          "description": "attacker (in)dependence",
+          "observed": "independent"
+        },
+        {
+          "fr_id": "FR-29",
+          "status": "PASS",
+          "description": "DR >=90%",
+          "observed": "dr=1.0000"
+        },
+        {
+          "fr_id": "FR-30",
+          "status": "PASS",
+          "description": "MTTR_response <1000ms",
+          "observed": "mttr_response_ms=0.0000"
+        },
+        {
+          "fr_id": "FR-31",
+          "status": "PASS",
+          "description": "availability >99%",
+          "observed": "availability=1.0000"
+        },
+        {
+          "fr_id": "FR-32",
+          "status": "NA",
+          "description": "rejections carry a reason",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-33",
+          "status": "PASS",
+          "description": ">=5 concurrent incidents",
+          "observed": "7 handled"
+        },
+        {
+          "fr_id": "FR-34",
+          "status": "NA",
+          "description": "coverage reassigned <2s",
+          "observed": "no failures"
+        }
+      ]
+    },
+    {
+      "name": "Scenario 5 - Agent Failure",
+      "passed": true,
+      "social_welfare": 0.9331,
+      "criteria": {
+        "coverage_reassigned<2s": true,
+        "MTTR_response<1000ms": true,
+        "SW>=0.80": true
+      },
+      "constraints": [
+        {
+          "fr_id": "FR-01",
+          "status": "PASS",
+          "description": "TMA samples >=10/s",
+          "observed": "min=100.0"
+        },
+        {
+          "fr_id": "FR-02",
+          "status": "PASS",
+          "description": "alerts only on >2 sigma",
+          "observed": "0/15 violate"
+        },
+        {
+          "fr_id": "FR-03",
+          "status": "PASS",
+          "description": "TMA alert <100ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-04",
+          "status": "PASS",
+          "description": "baseline update <=60s",
+          "observed": "max gap=1000.0ms"
+        },
+        {
+          "fr_id": "FR-05",
+          "status": "PASS",
+          "description": "ACA classify <200ms",
+          "observed": "max=50ms"
+        },
+        {
+          "fr_id": "FR-06",
+          "status": "PASS",
+          "description": "confirmed severity in [0,1]",
+          "observed": "0/2 violate"
+        },
+        {
+          "fr_id": "FR-07",
+          "status": "PASS",
+          "description": "confirmed/suspicious reported",
+          "observed": "0/11 violate"
+        },
+        {
+          "fr_id": "FR-08",
+          "status": "PASS",
+          "description": "online learning after resolution",
+          "observed": "2 updates"
+        },
+        {
+          "fr_id": "FR-09",
+          "status": "PASS",
+          "description": "FPR <10%",
+          "observed": "fpr=0.0588"
+        },
+        {
+          "fr_id": "FR-10",
+          "status": "PASS",
+          "description": "RCA respond <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-11",
+          "status": "NA",
+          "description": "no quarantine without majority",
+          "observed": "no quarantines"
+        },
+        {
+          "fr_id": "FR-12",
+          "status": "PASS",
+          "description": "responses have decision trace",
+          "observed": "0/2 violate"
+        },
+        {
+          "fr_id": "FR-13",
+          "status": "PASS",
+          "description": "proportionality >=0.7",
+          "observed": "0/2 violate"
+        },
+        {
+          "fr_id": "FR-14",
+          "status": "PASS",
+          "description": "resolution notice present",
+          "observed": "0/2 violate"
+        },
+        {
+          "fr_id": "FR-15",
+          "status": "PASS",
+          "description": "TIA model update <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-16",
+          "status": "PASS",
+          "description": "correlation <1000ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-17",
+          "status": "PASS",
+          "description": "multi-segment -> coalition",
+          "observed": "1 coalitions"
+        },
+        {
+          "fr_id": "FR-18",
+          "status": "PASS",
+          "description": "priority list <=1s",
+          "observed": "max gap=1000.0ms"
+        },
+        {
+          "fr_id": "FR-19",
+          "status": "PASS",
+          "description": "auction <300ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-20",
+          "status": "PASS",
+          "description": "auction grants top severity",
+          "observed": "0 mis-allocated"
+        },
+        {
+          "fr_id": "FR-21",
+          "status": "PASS",
+          "description": "auction notify <100ms",
+          "observed": "0/2 violate"
+        },
+        {
+          "fr_id": "FR-22",
+          "status": "PASS",
+          "description": "reclaim <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-23",
+          "status": "PASS",
+          "description": "overhead <40%",
+          "observed": "resource_overhead=0.0000"
+        },
+        {
+          "fr_id": "FR-24",
+          "status": "PASS",
+          "description": "DDoS randomized IPs",
+          "observed": "0 under-diverse"
+        },
+        {
+          "fr_id": "FR-25",
+          "status": "NA",
+          "description": "scan pseudo-random order",
+          "observed": "no scans"
+        },
+        {
+          "fr_id": "FR-26",
+          "status": "NA",
+          "description": "zero-day detected as novel",
+          "observed": "no zero-day"
+        },
+        {
+          "fr_id": "FR-27",
+          "status": "PASS",
+          "description": "attackers log actions",
+          "observed": "1 logged"
+        },
+        {
+          "fr_id": "FR-28",
+          "status": "PASS",
+          "description": "attacker (in)dependence",
+          "observed": "independent"
+        },
+        {
+          "fr_id": "FR-29",
+          "status": "PASS",
+          "description": "DR >=90%",
+          "observed": "dr=1.0000"
+        },
+        {
+          "fr_id": "FR-30",
+          "status": "PASS",
+          "description": "MTTR_response <1000ms",
+          "observed": "mttr_response_ms=0.0000"
+        },
+        {
+          "fr_id": "FR-31",
+          "status": "PASS",
+          "description": "availability >99%",
+          "observed": "availability=1.0000"
+        },
+        {
+          "fr_id": "FR-32",
+          "status": "NA",
+          "description": "rejections carry a reason",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-33",
+          "status": "PASS",
+          "description": ">=5 concurrent incidents",
+          "observed": "11 handled"
+        },
+        {
+          "fr_id": "FR-34",
+          "status": "PASS",
+          "description": "coverage reassigned <2s",
+          "observed": "0 slow/missing"
+        }
+      ]
+    },
+    {
+      "name": "Scenario 6 - Voting Protocol",
+      "passed": true,
+      "social_welfare": 0.9232,
+      "criteria": {
+        "quarantine_after_majority": true,
+        "vote<300ms": true,
+        "SW>=0.80": true
+      },
+      "constraints": [
+        {
+          "fr_id": "FR-01",
+          "status": "PASS",
+          "description": "TMA samples >=10/s",
+          "observed": "min=100.0"
+        },
+        {
+          "fr_id": "FR-02",
+          "status": "PASS",
+          "description": "alerts only on >2 sigma",
+          "observed": "0/9 violate"
+        },
+        {
+          "fr_id": "FR-03",
+          "status": "PASS",
+          "description": "TMA alert <100ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-04",
+          "status": "PASS",
+          "description": "baseline update <=60s",
+          "observed": "max gap=1050.0ms"
+        },
+        {
+          "fr_id": "FR-05",
+          "status": "PASS",
+          "description": "ACA classify <200ms",
+          "observed": "max=50ms"
+        },
+        {
+          "fr_id": "FR-06",
+          "status": "PASS",
+          "description": "confirmed severity in [0,1]",
+          "observed": "0/4 violate"
+        },
+        {
+          "fr_id": "FR-07",
+          "status": "PASS",
+          "description": "confirmed/suspicious reported",
+          "observed": "0/4 violate"
+        },
+        {
+          "fr_id": "FR-08",
+          "status": "PASS",
+          "description": "online learning after resolution",
+          "observed": "3 updates"
+        },
+        {
+          "fr_id": "FR-09",
+          "status": "PASS",
+          "description": "FPR <10%",
+          "observed": "fpr=0.0000"
+        },
+        {
+          "fr_id": "FR-10",
+          "status": "PASS",
+          "description": "RCA respond <500ms",
+          "observed": "max=50ms"
+        },
+        {
+          "fr_id": "FR-11",
+          "status": "PASS",
+          "description": "no quarantine without majority",
+          "observed": "0 unauthorized"
+        },
+        {
+          "fr_id": "FR-12",
+          "status": "PASS",
+          "description": "responses have decision trace",
+          "observed": "0/2 violate"
+        },
+        {
+          "fr_id": "FR-13",
+          "status": "PASS",
+          "description": "proportionality >=0.7",
+          "observed": "0/2 violate"
+        },
+        {
+          "fr_id": "FR-14",
+          "status": "PASS",
+          "description": "resolution notice present",
+          "observed": "0/2 violate"
+        },
+        {
+          "fr_id": "FR-15",
+          "status": "PASS",
+          "description": "TIA model update <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-16",
+          "status": "PASS",
+          "description": "correlation <1000ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-17",
+          "status": "PASS",
+          "description": "multi-segment -> coalition",
+          "observed": "1 coalitions"
+        },
+        {
+          "fr_id": "FR-18",
+          "status": "PASS",
+          "description": "priority list <=1s",
+          "observed": "max gap=1000.0ms"
+        },
+        {
+          "fr_id": "FR-19",
+          "status": "PASS",
+          "description": "auction <300ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-20",
+          "status": "PASS",
+          "description": "auction grants top severity",
+          "observed": "0 mis-allocated"
+        },
+        {
+          "fr_id": "FR-21",
+          "status": "PASS",
+          "description": "auction notify <100ms",
+          "observed": "0/1 violate"
+        },
+        {
+          "fr_id": "FR-22",
+          "status": "PASS",
+          "description": "reclaim <500ms",
+          "observed": "max=0ms"
+        },
+        {
+          "fr_id": "FR-23",
+          "status": "PASS",
+          "description": "overhead <40%",
+          "observed": "resource_overhead=0.0000"
+        },
+        {
+          "fr_id": "FR-24",
+          "status": "NA",
+          "description": "DDoS randomized IPs",
+          "observed": "no DDoS"
+        },
+        {
+          "fr_id": "FR-25",
+          "status": "NA",
+          "description": "scan pseudo-random order",
+          "observed": "no scans"
+        },
+        {
+          "fr_id": "FR-26",
+          "status": "NA",
+          "description": "zero-day detected as novel",
+          "observed": "no zero-day"
+        },
+        {
+          "fr_id": "FR-27",
+          "status": "PASS",
+          "description": "attackers log actions",
+          "observed": "2 logged"
+        },
+        {
+          "fr_id": "FR-28",
+          "status": "PASS",
+          "description": "attacker (in)dependence",
+          "observed": "independent"
+        },
+        {
+          "fr_id": "FR-29",
+          "status": "PASS",
+          "description": "DR >=90%",
+          "observed": "dr=1.0000"
+        },
+        {
+          "fr_id": "FR-30",
+          "status": "PASS",
+          "description": "MTTR_response <1000ms",
+          "observed": "mttr_response_ms=50.0000"
+        },
+        {
+          "fr_id": "FR-31",
+          "status": "PASS",
+          "description": "availability >99%",
+          "observed": "availability=0.9992"
+        },
+        {
+          "fr_id": "FR-32",
+          "status": "NA",
+          "description": "rejections carry a reason",
+          "observed": "no events"
+        },
+        {
+          "fr_id": "FR-33",
+          "status": "NA",
+          "description": ">=5 concurrent incidents",
+          "observed": "4 incidents"
+        },
+        {
+          "fr_id": "FR-34",
+          "status": "NA",
+          "description": "coverage reassigned <2s",
+          "observed": "no failures"
+        }
+      ]
+    }
+  ]
+}
