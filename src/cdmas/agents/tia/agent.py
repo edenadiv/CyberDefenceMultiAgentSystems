@@ -6,6 +6,8 @@ formation on detected multi-segment correlation is wired in Phase 4.
 
 from __future__ import annotations
 
+from uuid import uuid4
+
 from cdmas.agents.tia.threat_map import GlobalThreatMap, ThreatEntry
 from cdmas.common.bdi.base_agent import BaseAgent
 from cdmas.common.bdi.belief_base import Belief
@@ -116,5 +118,38 @@ class ThreatIntelligenceAgent(BaseAgent):
         await self.log_event(
             EventType.ACTION_EXECUTED,
             payload={"signal": "correlation", "segments": sorted(s.value for s in active)},
+            latency_ms=int(now - last_ts),
+        )
+        await self._form_coalition(now, active, last_ts)
+
+    async def _form_coalition(self, now: float, active: set[Segment], last_ts: float) -> None:
+        coalition_id = str(uuid4())
+        members = sorted(f"RCA:{s.value}" for s in active)
+        lead = members[0] if members else None
+        await self.publish(
+            ACLMessage(
+                performative=Performative.REQUEST,
+                sender=self.agent_id,
+                receiver="BROADCAST",
+                topic=Topic.COALITION,
+                content={
+                    "coalition": {
+                        "coalition_id": coalition_id,
+                        "members": members,
+                        "lead_rca": lead,
+                        "segments": sorted(s.value for s in active),
+                    },
+                    "ts_ms": now,
+                },
+            )
+        )
+        await self.log_event(
+            EventType.COALITION_FORMED,
+            payload={
+                "coalition_id": coalition_id,
+                "members": members,
+                "lead_rca": lead,
+                "segments": sorted(s.value for s in active),
+            },
             latency_ms=int(now - last_ts),
         )
