@@ -6,13 +6,15 @@ response, validated inside a simulated four-segment corporate network. Autonomou
 respond to attacks with a target **Mean Time to Respond (MTTR) < 1 second**.
 
 > ⚠️ **This is a simulation and validation platform, not a live network appliance.**
-> Every "attacker" is a simulated agent. The system models a cyber-defense layer and
-> proves, via an automated constraint checker, that it meets a set of quantitative
-> performance targets defined in the SRS.
+> Every "attacker" is a simulated agent. The system proves, via an automated constraint
+> checker, that it meets the quantitative targets defined in the SRS.
 
-See the source specifications in [`docs/`](docs/):
-- `srs_cyber_defence_multi_agent_systems_2026.pdf` — Software Requirements Specification
-- `SDD_Cyber_Defense_MAS-6 2.pdf` — Software Design Document
+**Status: complete.** All six SRS validation scenarios pass (Social Welfare 0.92–1.00),
+the FR constraint checker reports 32 functional requirements passing / 0 failing, and the
+React command-center dashboard renders a recorded incident with a guided tutorial.
+
+Source specifications: [`docs/`](docs/) (SRS + SDD). Implementation plans:
+[`docs/superpowers/plans/`](docs/superpowers/plans/).
 
 ---
 
@@ -22,92 +24,96 @@ See the source specifications in [`docs/`](docs/):
 
 | Agent | Role | Headline responsibility |
 |-------|------|-------------------------|
-| **TMA** – Traffic Monitor      | The eyes          | Sample traffic ≥10×/s, flag >2σ anomalies, alert < 100 ms |
-| **ACA** – Anomaly Classifier   | The analyst       | ML-classify alerts < 200 ms, severity 0–1, online learning, FPR < 10% |
-| **RCA** – Response Coordinator | Incident commander| Proportional response < 500 ms, vote before quarantine |
-| **TIA** – Threat Intelligence  | Memory / broker   | Cross-segment correlation, coalition triggering |
-| **RAA** – Resource Allocator   | Logistics         | Sealed-bid auction, host overhead < 40% |
+| **TMA** – Traffic Monitor      | The eyes          | Sample traffic, rolling baseline, flag >2σ anomalies, alert < 100 ms |
+| **ACA** – Anomaly Classifier   | The analyst       | Hybrid ML classify < 200 ms (RandomForest + nearest-neighbour novelty), online learning |
+| **RCA** – Response Coordinator | Incident commander| Attack-type-aware proportional response < 500 ms; quarantine via majority vote |
+| **TIA** – Threat Intelligence  | Memory / broker   | Global threat map, cross-segment correlation, coalition formation |
+| **RAA** – Resource Allocator   | Logistics         | Sealed-bid auction, 40% host-overhead cap |
 
-**4 attacker agent types** for stress-testing: DDoS, Port Scanner, Lateral Movement,
-Zero-Day Emulator (modeled as a two-player zero-sum game vs. the defense coalition).
+**4 attacker agent types:** DDoS, Port Scanner, Lateral Movement, Zero-Day Emulator.
 
-## Coordination mechanisms
+## Coordination mechanisms (SDD §4)
 
-1. **Publish-Subscribe bus** (FIPA-ACL messages, Lamport clocks, idempotent dedup)
-2. **Coalition formation** (multi-segment threats)
-3. **Auction-based resource allocation** (sealed-bid, first-price)
-4. **Voting-based escalation** (>50% majority for quarantine)
+Publish-Subscribe bus (FIPA-ACL, Lamport clocks, idempotent dedup) · sealed-bid
+first-price auction · TIA-triggered coalition formation · majority-vote quarantine
+escalation (BLOCK fallback) · heartbeat-based failover (coverage reassigned < 2 s).
 
-## Mandatory targets (asserted by the validator)
+## Validated targets
 
-| Metric | Target |
-|--------|--------|
-| Detection Rate | > 90% |
-| False Positive Rate | < 8–10% |
-| MTTR (alert) | < 100 ms |
-| MTTR (response) | < 1000 ms |
-| System Availability | > 99% |
-| Resource Overhead | < 40% of host |
-| Social Welfare | ≥ 0.80 |
+| Metric | Target | Result (representative) |
+|--------|--------|--------------------------|
+| Detection Rate | > 90% | ✅ |
+| False Positive Rate | < 10% | ✅ |
+| MTTR (response) | < 1000 ms | ✅ |
+| System Availability | > 99% | ✅ |
+| Resource Overhead | < 40% | ✅ |
+| Social Welfare | ≥ 0.80 | ✅ 0.92–1.00 |
+
+Run the gate yourself: `make validate` (prints the six-scenario report) or
+`make acceptance` (pytest).
 
 ---
 
 ## Tech stack
 
-| Layer | Technology |
-|-------|------------|
-| Agent runtime | Python 3.11 + `asyncio` |
-| Message bus | Apache Kafka (`aiokafka`) |
-| ML / classification | scikit-learn, numpy |
-| Simulation API | FastAPI + Uvicorn |
-| Visualization backend | FastAPI + WebSocket |
-| Visualization frontend | React + D3.js + Recharts (Vite) |
-| Logging / analytics | structlog → PostgreSQL |
-| Orchestration | Docker Compose |
+Python 3.11 + asyncio · Apache Kafka (`aiokafka`) · scikit-learn + numpy · FastAPI +
+Uvicorn + WebSocket · React + D3.js + Recharts (Vite) · structlog → PostgreSQL ·
+Docker Compose. Tests: pytest (128) + vitest (4). Lint: ruff. Types: mypy --strict.
 
 ## Repository layout
 
 ```
-.
-├── docs/                      # Specs (SRS, SDD) + implementation plans
-│   └── superpowers/plans/     # Phase-by-phase implementation plans
-├── src/cdmas/                 # Python monorepo package
-│   ├── common/                # Shared: BDI core, messaging, models, logging
-│   │   ├── bdi/               # BaseAgent, BeliefBase, GoalSet, Plan, Intention
-│   │   ├── messaging/         # FIPA-ACL schema, bus client, Lamport clock, topics
-│   │   ├── models/            # Message payloads (Alert, ThreatReport, Bid, Vote, ...)
-│   │   └── logging/           # Structured event log
-│   ├── agents/                # The five defense agents + attackers
-│   ├── simulator/             # FastAPI network simulation engine
-│   ├── validator/             # Constraint checker + scenario runner
-│   └── analytics/             # Metric collection + scenario reports
-├── frontend/                  # React dashboard (3 pages: Dashboard, Inspector, Validator)
-├── deploy/dockerfiles/        # Per-service Dockerfiles
-├── tests/                     # Pytest suite (mirrors src/cdmas)
-├── docker-compose.yml         # Full system orchestration
-├── pyproject.toml             # Python package + dependencies
-└── Makefile                   # Common dev commands
+src/cdmas/
+├── common/        # BDI core, FIPA-ACL messaging + bus (in-memory + Kafka), models, logging, timing
+├── simulator/     # FastAPI network sim: topology, traffic, attack injector, clock, state, REST+WS
+├── agents/        # TMA, ACA, RCA, TIA, RAA + attackers + factory + runner/entrypoints
+├── coordination/  # auction, voting, coalition, failover protocols
+├── analytics/     # metrics, per-agent utilities, Social Welfare, reports
+└── validator/     # FR-01..34 constraint checkers, scenario harness, 6 scenarios, runner, export
+frontend/          # React command-center dashboard (Dashboard / Inspector / Validator) + tutorial
+deploy/dockerfiles/  docker-compose.yml  .github/workflows/ci.yml
 ```
 
 ---
 
 ## Quick start
 
-> Implementation is in progress — see the plans in `docs/superpowers/plans/`.
-
 ```bash
-# Local dev (Python)
-make install          # create venv + install package with dev extras
-make test             # run the pytest suite
-make lint             # ruff + mypy
+# Backend (Python)
+make install        # venv + package with dev extras
+make test           # unit suite (128 tests)
+make validate       # run the six SRS scenarios and print the report
+make lint typecheck # ruff + mypy --strict
 
-# Full system
-docker compose up --build
+# Dashboard (beautiful UI + guided tutorial)
+cd frontend && npm install && npm run dev   # http://localhost:5173
+#   then click "▶ Guided Tour" for the dynamic walkthrough
+
+# Full containerized system
+docker compose up                       # infra (Kafka + PostgreSQL)
+docker compose --profile app up --build # + simulator, 4 agent trios, TIA/RAA, dashboard
 ```
+
+The dashboard ships with a recorded multi-segment incident
+(`frontend/src/data/replay.json`, regenerate with `python -m cdmas.validator.export`),
+so it runs standalone; it can also stream from a live simulator's WebSocket.
+
+## Dashboard
+
+Three pages (SDD §6.2), over a deterministic **replay engine** that plays the recorded
+scenario on a scrubbable timeline:
+
+- **Dashboard** — network topology with live health, animated agent message-flow +
+  coalition overlay, chronological alert feed, live metrics vs SRS targets, RAA resource panel.
+- **Agent Inspector** — any agent's live BDI state: current intention, ranked desires,
+  and a streaming strategy trace.
+- **Validator** — all six scenarios with PASS/FAIL, Social Welfare, and the per-FR
+  constraint matrix.
+- **Guided Tour** — a 6-step dynamic tutorial that drives the replay through the full
+  detect → classify → respond → coordinate lifecycle.
 
 ## Development
 
-This project is built **test-first (TDD)** following the plans in
-`docs/superpowers/plans/`. Each subsystem plan produces working, tested software on its
-own. Build order: Foundations → Simulator → Defense Agents → Coordination → Attackers →
-Observability → Dashboard → Validation.
+Built test-first across 8 phases (Foundations → Simulator → Defense Agents →
+Coordination → Attackers → Observability → Dashboard → Validation). Plans in
+`docs/superpowers/plans/`.

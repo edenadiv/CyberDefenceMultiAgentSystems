@@ -30,7 +30,12 @@ async def build_export() -> dict[str, Any]:
                 "social_welfare": result.metrics.social_welfare,
                 "criteria": criteria,
                 "constraints": [
-                    {"fr_id": c.fr_id, "status": c.status, "description": c.description, "observed": c.observed}
+                    {
+                        "fr_id": c.fr_id,
+                        "status": c.status,
+                        "description": c.description,
+                        "observed": c.observed,
+                    }
                     for c in result.constraints
                 ],
             }
@@ -76,7 +81,9 @@ def main() -> None:
 
     target = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("frontend/src/data/replay.json")
     data = asyncio.run(write_export(target))
-    print(f"Wrote {target} ({len(data['replay']['events'])} events, {len(data['validation'])} scenarios)")
+    print(
+        f"Wrote {target} ({len(data['replay']['events'])} events, {len(data['validation'])} scenarios)"
+    )
 
 
 if __name__ == "__main__":
