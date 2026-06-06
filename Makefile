@@ -12,6 +12,12 @@ install:
 test:
 	$(VENV)/bin/pytest
 
+acceptance:
+	$(VENV)/bin/pytest tests/acceptance -v
+
+validate:
+	$(VENV)/bin/python -m cdmas.validator
+
 test-cov:
 	$(VENV)/bin/pytest --cov=cdmas --cov-report=term-missing --cov-report=html
 

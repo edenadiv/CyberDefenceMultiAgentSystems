@@ -52,17 +52,9 @@ class AnomalyClassifierAgent(BaseAgent):
         self.plans.append(
             Plan(
                 plan_id="classify",
-                trigger=lambda b: len(self._pending) > 0,
+                trigger=lambda b: len(self._pending) > 0 or bool(b.value("resolution_pending")),
                 precondition=lambda b: True,
                 body=self._classify,
-            )
-        )
-        self.plans.append(
-            Plan(
-                plan_id="online_learn",
-                trigger=lambda b: bool(b.value("resolution_pending")),
-                precondition=lambda b: True,
-                body=self._online_learn,
             )
         )
 
@@ -81,6 +73,8 @@ class AnomalyClassifierAgent(BaseAgent):
             )
 
     async def _classify(self, _agent: BaseAgent) -> None:
+        if self.beliefs.value("resolution_pending"):
+            await self._online_learn(_agent)
         while self._pending:
             item = self._pending.pop(0)
             features: list[float] = item["features"]

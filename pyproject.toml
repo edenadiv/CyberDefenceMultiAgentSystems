@@ -66,6 +66,7 @@ timeout = 30
 markers = [
     "integration: tests that require the message bus or simulator running",
     "slow: long-running tests",
+    "acceptance: full six-scenario acceptance gate",
 ]
 
 [tool.ruff]

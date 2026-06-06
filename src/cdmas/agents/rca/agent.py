@@ -58,6 +58,7 @@ class ResponseCoordinatorAgent(BaseAgent):
         self._pending: list[dict[str, Any]] = []
         self._vote: dict[str, Any] | None = None
         self._outbox_votes: list[dict[str, Any]] = []
+        self._quarantined: set[str] = set()
 
     def setup(self) -> None:
         self.subscribe(Topic.THREAT_REPORTS)
@@ -78,6 +79,9 @@ class ResponseCoordinatorAgent(BaseAgent):
     def on_message(self, message: ACLMessage) -> None:
         if message.topic is Topic.THREAT_REPORTS:
             threat = message.content["threat"]
+            # Each RCA owns its segment's incidents (no cross-segment redundancy).
+            if self.segment is not None and threat["segment"] != self.segment:
+                return
             if (
                 threat["classification"] == Classification.CONFIRMED_THREAT.value
                 and threat["severity"] >= _SEVERITY_THRESHOLD
@@ -130,6 +134,8 @@ class ResponseCoordinatorAgent(BaseAgent):
     async def _handle_threat(self, threat: dict[str, Any], ts_ms: float) -> None:
         severity: float = threat["severity"]
         seg = Segment(threat["segment"])
+        if seg.value in self._quarantined:
+            return  # already contained; no redundant response
         action = select_proportional_action(severity, AttackType(threat["attack_type"]))
         await self._submit_bid(threat, severity)
         if action.type is ResponseType.QUARANTINE:
@@ -233,6 +239,8 @@ class ResponseCoordinatorAgent(BaseAgent):
         vote_id: str | None = None,
     ) -> None:
         result = await self.sim.apply_action(ActionRequest(type=exec_type, segment=seg))
+        if exec_type is ResponseType.QUARANTINE:
+            self._quarantined.add(seg.value)
         now = self.now_ms()
         payload: dict[str, Any] = {
             "signal": "response",

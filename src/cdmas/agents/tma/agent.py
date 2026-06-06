@@ -19,6 +19,7 @@ from cdmas.simulator.client import SimClientProtocol
 
 _ALERT_SIGMA = 2.0
 _TELEMETRY_INTERVAL_MS = 1000.0
+_ALERT_COOLDOWN_MS = 300.0  # prevents duplicate alert flooding (SRS last_alert_time)
 
 
 class TrafficMonitorAgent(BaseAgent):
@@ -38,6 +39,7 @@ class TrafficMonitorAgent(BaseAgent):
         self._seg = Segment(segment) if segment else Segment.PUBLIC_FACING
         self._last_sampling_ms = -1e9
         self._last_baseline_ms = -1e9
+        self._last_alert_ms = -1e9
 
     def setup(self) -> None:
         self.goals.add(Goal(description="detect anomalies", priority=1.0))
@@ -59,6 +61,8 @@ class TrafficMonitorAgent(BaseAgent):
         now = self.now_ms()
         await self._emit_sampling(now)
         if deviation > _ALERT_SIGMA:
+            if now - self._last_alert_ms < _ALERT_COOLDOWN_MS:
+                return  # already alerting on this ongoing anomaly
             alert = Alert(
                 segment=self._seg,
                 anomaly_type=AttackType.VOLUME_SPIKE,
@@ -128,6 +132,7 @@ class TrafficMonitorAgent(BaseAgent):
             },
             latency_ms=int(now - ts_ms),
         )
+        self._last_alert_ms = now
         self.beliefs.revise(Belief(predicate="pending_alert", value=None, source=self.agent_id))
 
     async def step(self) -> None:

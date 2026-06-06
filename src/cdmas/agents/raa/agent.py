@@ -86,7 +86,12 @@ class ResourceAllocatorAgent(BaseAgent):
             await self._monitor_overhead(now)
 
     async def _run_auction(self, now: float) -> None:
-        bids = self._bids
+        # Keep each bidder's highest bid so the auction allocates to distinct agents.
+        best: dict[str, Bid] = {}
+        for b in self._bids:
+            if b.bidder_id not in best or b.bid_value > best[b.bidder_id].bid_value:
+                best[b.bidder_id] = b
+        bids = list(best.values())
         outcome = run_auction(bids, self.quarantine_slots)
         for winner in outcome.granted:
             await self.publish(
