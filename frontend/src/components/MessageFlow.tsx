@@ -1,9 +1,12 @@
 import { useMemo } from "react";
 
+import { attackerNodeFor } from "../lib/replay";
 import { useReplay } from "../lib/replayContext";
 
 const NODES: Record<string, { x: number; y: number; color: string }> = {
   "ATK-DDOS": { x: 90, y: 90, color: "var(--red)" },
+  // shares the DDoS slot: no recording pairs them, and absent attackers aren't drawn
+  "ATK-ZD": { x: 90, y: 90, color: "var(--red)" },
   "ATK-LAT": { x: 90, y: 250, color: "var(--red)" },
   CLIENTS: { x: 90, y: 170, color: "var(--cyan)" },
   NETWORK: { x: 280, y: 170, color: "var(--amber)" },
@@ -16,6 +19,7 @@ const NODES: Record<string, { x: number; y: number; color: string }> = {
 
 const NODE_LABELS: Record<string, string> = {
   "ATK-DDOS": "ATK-DDOS",
+  "ATK-ZD": "ATK-ZDAY",
   "ATK-LAT": "ATK-LAT",
   CLIENTS: "LEGIT-CLIENTS",
   NETWORK: "NETWORK",
@@ -45,6 +49,13 @@ const LEGEND_ITEMS: Array<{ label: string; color: string }> = [
 export function MessageFlow() {
   const { data, derived, t } = useReplay();
   const coalition = derived.coalitions[0];
+  const presentAttackers = useMemo(
+    () =>
+      new Set(
+        data.replay.events.filter((e) => e.agent_type === "ATK").map((e) => attackerNodeFor(e)),
+      ),
+    [data.replay.events],
+  );
   const timeline = useMemo(() => {
     return data.replay.events
       .filter((e) => e.wall_ms <= t)
@@ -169,7 +180,9 @@ export function MessageFlow() {
           );
         })}
 
-        {Object.entries(NODES).map(([name, n]) => {
+        {Object.entries(NODES)
+          .filter(([name]) => !name.startsWith("ATK-") || presentAttackers.has(name))
+          .map(([name, n]) => {
           const active = derived.flows.some((f) => f.from === name || f.to === name);
           return (
             <g key={name}>

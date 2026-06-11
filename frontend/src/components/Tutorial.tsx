@@ -32,8 +32,8 @@ export function Tutorial({ onClose, onPlayFromStart, onSeek }: Props) {
     },
     {
       eyebrow: "03 / 06 · The attack",
-      title: "Press play — the attack lands",
-      body: "A DDoS floods Public-Facing while a lateral-movement breach spreads through Internal. Watch the Traffic Monitors raise alerts and the alert feed light up on the right.",
+      title: "Launch a scenario — the attack lands",
+      body: "Each button in the bottom bar plays one recorded scenario — the tour launches Scenario 2, Multi-Segment. A DDoS floods Public-Facing while a lateral-movement breach spreads through Internal. Watch the Traffic Monitors raise alerts and the alert feed light up on the right.",
       enter: () => onPlayFromStart(),
     },
     {

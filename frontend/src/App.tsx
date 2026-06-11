@@ -7,21 +7,30 @@ import { Tutorial } from "./components/Tutorial";
 import rawData from "./data/replay.json";
 import { deriveState } from "./lib/replay";
 import { ReplayContext } from "./lib/replayContext";
-import type { ExportData } from "./lib/types";
+import type { ExportBundle, ExportData } from "./lib/types";
 import { Dashboard } from "./pages/Dashboard";
 import { Inspector } from "./pages/Inspector";
 import { Validator } from "./pages/Validator";
 
-const data = rawData as unknown as ExportData;
-const duration = Math.max(data.replay.duration_ms, 1);
-const segments = data.topology.segments;
+const bundle = rawData as unknown as ExportBundle;
+const scenarios = bundle.replays.map((r) => r.scenario);
+// The guided tour narrates the multi-segment incident, so it is the default view.
+const DEFAULT_SCENARIO = Math.max(
+  0,
+  bundle.replays.findIndex((r) => r.scenario.includes("Multi-Segment")),
+);
 
 export default function App() {
-  const [t, setT] = useState(duration); // start fully revealed; tutorial/scrub to replay
+  const [scenario, setScenario] = useState(DEFAULT_SCENARIO);
+  // start fully revealed; tutorial/scrub to replay
+  const [t, setT] = useState(() => Math.max(bundle.replays[DEFAULT_SCENARIO].duration_ms, 1));
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(2);
   const [tutorialOpen, setTutorialOpen] = useState(false);
   const last = useRef<number | null>(null);
+
+  const replay = bundle.replays[scenario];
+  const duration = Math.max(replay.duration_ms, 1);
 
   useEffect(() => {
     if (!playing) {
@@ -46,21 +55,52 @@ export default function App() {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [playing, speed]);
+  }, [playing, speed, duration]);
 
-  const derived = useMemo(() => deriveState(data.replay.events, t, segments), [t]);
+  const data: ExportData = useMemo(
+    () => ({ topology: replay.topology, replay, validation: bundle.validation }),
+    [replay],
+  );
+  const derived = useMemo(
+    () => deriveState(replay.events, t, replay.topology.segments),
+    [replay, t],
+  );
 
-  const restart = () => {
+  const selectScenario = (i: number) => {
+    setScenario(i);
     setT(0);
     setPlaying(true);
   };
 
+  const restart = () => selectScenario(DEFAULT_SCENARIO);
+
+  // The tour's narration and seek points assume the default recording.
+  const openTutorial = () => {
+    setScenario(DEFAULT_SCENARIO);
+    setPlaying(false);
+    setT(Math.max(bundle.replays[DEFAULT_SCENARIO].duration_ms, 1));
+    setTutorialOpen(true);
+  };
+
   return (
     <ReplayContext.Provider
-      value={{ data, duration, t, setT, playing, setPlaying, speed, setSpeed, derived }}
+      value={{
+        data,
+        scenarios,
+        scenario,
+        selectScenario,
+        duration,
+        t,
+        setT,
+        playing,
+        setPlaying,
+        speed,
+        setSpeed,
+        derived,
+      }}
     >
       <div className="app">
-        <Header onTutorial={() => setTutorialOpen(true)} />
+        <Header onTutorial={openTutorial} />
         <div className="content">
           <Routes>
             <Route path="/" element={<Dashboard />} />

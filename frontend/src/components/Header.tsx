@@ -1,9 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
 
+import { shortScenarioName } from "../lib/replay";
 import { useReplay } from "../lib/replayContext";
 
 export function Header({ onTutorial }: { onTutorial: () => void }) {
-  const { playing } = useReplay();
+  const { playing, scenarios, scenario } = useReplay();
 
   return (
     <header className="topbar">
@@ -42,7 +43,8 @@ export function Header({ onTutorial }: { onTutorial: () => void }) {
           ▶ Guided Tour
         </button>
         <span className={`live-pill header-status ${playing ? "is-playing" : "is-paused"}`}>
-          <span className="live-dot" /> {playing ? "SIMULATION ACTIVE" : "SIMULATION PAUSED"}
+          <span className="live-dot" /> {playing ? "SIMULATION ACTIVE" : "SIMULATION PAUSED"} ·{" "}
+          {shortScenarioName(scenarios[scenario]).toUpperCase()}
         </span>
       </div>
     </header>

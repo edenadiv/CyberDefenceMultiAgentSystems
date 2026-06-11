@@ -5,6 +5,9 @@ import type { ExportData } from "./types";
 
 export interface ReplayCtx {
   data: ExportData;
+  scenarios: string[];
+  scenario: number;
+  selectScenario: (i: number) => void;
   duration: number;
   t: number;
   setT: (n: number) => void;

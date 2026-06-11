@@ -45,9 +45,14 @@ function levelFor(severity: number, classification?: string): "critical" | "susp
   return "info";
 }
 
-function attackerNodeFor(e: CdmasEvent): string {
+export function shortScenarioName(scenario: string): string {
+  return scenario.replace(/^Scenario\s*\d+\s*-\s*/, "");
+}
+
+export function attackerNodeFor(e: CdmasEvent): string {
   if (e.agent_type !== "ATK") return "ATK";
-  const suffix = e.agent_id.split(":")[1]?.toUpperCase();
+  // strip instance digits: lat0..lat3 are all the lateral-movement attacker
+  const suffix = e.agent_id.split(":")[1]?.toUpperCase().replace(/\d+$/, "");
   if (!suffix) return "ATK";
   if (suffix === "LATERAL") return "ATK-LAT";
   return `ATK-${suffix}`;

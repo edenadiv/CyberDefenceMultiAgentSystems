@@ -34,9 +34,15 @@ export interface Metrics {
   concurrent_incidents: number;
 }
 
+export interface TopologyInfo {
+  segments: string[];
+  adjacency: Record<string, string[]>;
+}
+
 export interface ReplayData {
   scenario: string;
   duration_ms: number;
+  topology: TopologyInfo;
   events: CdmasEvent[];
   metrics: Metrics;
 }
@@ -56,8 +62,15 @@ export interface ScenarioValidation {
   constraints: Constraint[];
 }
 
+/** The bundled export: one recording per scenario + the validation summary. */
+export interface ExportBundle {
+  replays: ReplayData[];
+  validation: ScenarioValidation[];
+}
+
+/** View over the bundle for the active scenario; what panels consume. */
 export interface ExportData {
-  topology: { segments: string[]; adjacency: Record<string, string[]> };
+  topology: TopologyInfo;
   replay: ReplayData;
   validation: ScenarioValidation[];
 }

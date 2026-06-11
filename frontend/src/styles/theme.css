@@ -632,6 +632,17 @@ h3 {
 }
 
 /* ---- replay controls ---- */
+.scenario-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.scn-num {
+  color: var(--dim);
+  font-size: 10px;
+  margin-right: 5px;
+}
 .replay {
   display: flex;
   align-items: center;
