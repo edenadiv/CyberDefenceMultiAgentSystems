@@ -1,4 +1,4 @@
-from cdmas.agents._common.features import build_training_set, extract_features
+from cdmas.agents._common.features import FEATURE_NAMES, build_training_set, extract_features
 from cdmas.agents.aca.agent import AnomalyClassifierAgent
 from cdmas.agents.aca.classifier import HybridClassifier
 from cdmas.common.logging.event_log import EventType
@@ -93,3 +93,36 @@ async def test_aca_online_learning_on_resolution():
         if e.event_type is EventType.ACTION_EXECUTED and e.payload.get("signal") == "online_update"
     ]
     assert updates
+
+
+async def test_aca_threat_classified_carries_structured_internals():
+    clk = ManualClock()
+    bus = InMemoryBus()
+    aca = AnomalyClassifierAgent(
+        "ACA:seg1", "public-facing", bus, clock=clk, classifier=_shared_classifier()
+    )
+    aca.setup()
+    await bus.publish(
+        ACLMessage(
+            performative=Performative.INFORM,
+            sender="TMA:seg1",
+            receiver="BROADCAST",
+            topic=Topic.ALERTS,
+            seq=1,
+            content={"alert": {"alert_id": "a1"}, "features": _ddos_features(), "ts_ms": 0.0},
+        )
+    )
+    clk.advance(10)
+    await aca.step()
+
+    classified = [e for e in aca.sink.events if e.event_type is EventType.THREAT_CLASSIFIED]
+    assert classified
+    trace = classified[-1].decision_trace
+    assert trace is not None
+    # The dashboard reads these structured numbers (not the reasoning string).
+    assert trace.confidence is not None and 0.0 <= trace.confidence <= 1.0
+    assert trace.novelty is not None
+    assert trace.features is not None and len(trace.features) == len(FEATURE_NAMES)
+    assert trace.feature_names == FEATURE_NAMES
+    # Back-compat: the human-readable reasoning string is preserved.
+    assert "confidence=" in trace.reasoning

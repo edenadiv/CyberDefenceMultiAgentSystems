@@ -213,6 +213,13 @@ class ResponseCoordinatorAgent(BaseAgent):
                 "approved": approved,
             },
             latency_ms=int(now - vote["started"]),
+            decision_trace=DecisionTrace(
+                inputs={"vote_id": vote["vote_id"], "severity": vote["threat"]["severity"]},
+                plan_selected="quarantine_vote",
+                reasoning=f"{accept_count}/{len(vote['members'])} accept",
+                action="QUARANTINE" if approved else "BLOCK_FALLBACK",
+                votes={vid: v.value for vid, v in vote["votes"].items()},
+            ),
         )
         threat, seg, ts_ms = vote["threat"], vote["segment"], vote["ts_ms"]
         self._vote = None

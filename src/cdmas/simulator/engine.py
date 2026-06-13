@@ -20,6 +20,7 @@ from cdmas.simulator.models import (
 )
 from cdmas.simulator.packet import Packet
 from cdmas.simulator.resources import ResourcePool
+from cdmas.simulator.sampling import PacketSampler
 from cdmas.simulator.state import StateManager
 from cdmas.simulator.topology import NetworkTopology
 from cdmas.simulator.traffic import TrafficGenerator
@@ -38,6 +39,7 @@ class InProcessSimulator:
         speed: float = 1.0,
         tick_ms: int = 10,
         resource_pool: ResourcePool | None = None,
+        sampler: PacketSampler | None = None,
     ) -> None:
         self.clock = clock
         self.segments = segments if segments is not None else list(Segment)
@@ -47,6 +49,7 @@ class InProcessSimulator:
         self.injector = AttackInjector(seed=seed + 1, topology=self.topology)
         self.state = StateManager(self.topology)
         self.resources = resource_pool or ResourcePool()
+        self.sampler = sampler  # optional dashboard packet capture (validator path only)
         self._last: dict[Segment, list[Packet]] = {s: [] for s in self.segments}
 
     # --- environment driving ---------------------------------------------
@@ -55,6 +58,9 @@ class InProcessSimulator:
         for seg in self.segments:
             base = self.traffic.sample(seg, _PACKETS_PER_TICK, ts_ms=now)
             malicious = self.injector.overlay(seg, now)
+            if self.sampler is not None:
+                # Capture the *real* attack burst before throttle/quarantine attenuates it.
+                self.sampler.observe(seg, now, base, malicious)
             if malicious and not self.state.is_quarantined(seg):
                 self.state.mark_under_attack(seg)
             defenses = self.state.active_defenses(seg)

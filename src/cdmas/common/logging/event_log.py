@@ -31,6 +31,14 @@ class DecisionTrace(BaseModel):
     plan_selected: str
     reasoning: str
     action: str
+    # Structured decision internals for the dashboard (additive, optional — the FR
+    # constraint checker reads none of these, so existing call sites are unaffected).
+    confidence: float | None = None
+    novelty: float | None = None
+    features: list[float] | None = None
+    feature_names: list[str] | None = None
+    votes: dict[str, str] | None = None  # voter_id -> ACCEPT/REJECT
+    vote_rationale: dict[str, str] | None = None
 
 
 class EventLog(BaseModel):

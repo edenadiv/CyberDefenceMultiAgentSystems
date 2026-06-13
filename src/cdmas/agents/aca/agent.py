@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from cdmas.agents._common.features import TRAIN_LABELS, build_training_set
+from cdmas.agents._common.features import FEATURE_NAMES, TRAIN_LABELS, build_training_set
 from cdmas.agents.aca.classifier import HybridClassifier
 from cdmas.agents.aca.online import OnlineLearner
 from cdmas.common.bdi.base_agent import BaseAgent
@@ -121,6 +121,10 @@ class AnomalyClassifierAgent(BaseAgent):
                     plan_selected="classify",
                     reasoning=f"confidence={verdict.confidence:.2f} novelty={verdict.novelty:.2f}",
                     action="PUBLISH_THREAT_REPORT" if reported else "DROP_NORMAL",
+                    confidence=round(verdict.confidence, 4),
+                    novelty=round(verdict.novelty, 4),
+                    features=[round(f, 4) for f in features],
+                    feature_names=FEATURE_NAMES,
                 ),
             )
 

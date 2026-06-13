@@ -1,3 +1,4 @@
+import { SLOT_ORDER, SLOTS } from "../lib/graph";
 import type { SegStatus } from "../lib/replay";
 import { useReplay } from "../lib/replayContext";
 
@@ -34,29 +35,6 @@ const AGENT_CHIPS = [
   { letter: "A", name: "Anomaly Classifier" },
   { letter: "R", name: "Response Coordinator" },
 ];
-
-// Node-center templates by active-segment count; scenarios activate 1–4 segments.
-const SLOTS: Record<number, Array<{ x: number; y: number }>> = {
-  1: [{ x: 120, y: 140 }],
-  2: [
-    { x: 120, y: 75 },
-    { x: 120, y: 215 },
-  ],
-  3: [
-    { x: 120, y: 70 },
-    { x: 64, y: 215 },
-    { x: 176, y: 215 },
-  ],
-  4: [
-    { x: 64, y: 75 },
-    { x: 176, y: 75 },
-    { x: 64, y: 215 },
-    { x: 176, y: 215 },
-  ],
-};
-
-// Corner order chosen so the fixed adjacency draws with one diagonal and no crossings.
-const SLOT_ORDER = ["server", "internal", "public-facing", "sec-mon"];
 
 const NODE_W = 100;
 const NODE_H = 66;

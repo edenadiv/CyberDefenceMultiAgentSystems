@@ -5,6 +5,7 @@ from cdmas.common.messaging.bus import InMemoryBus
 from cdmas.common.messaging.topics import Topic
 from cdmas.common.models.enums import Performative, Segment
 from cdmas.common.timing.clock import ManualClock
+from cdmas.coordination.voting import VOTE_DEADLINE_MS
 from cdmas.simulator.engine import InProcessSimulator
 
 
@@ -73,3 +74,37 @@ async def test_rca_ignores_low_severity():
     )
     await rca.step()
     assert not [e for e in rca.sink.events if e.payload.get("signal") == "response"]
+
+
+async def test_rca_vote_cast_carries_per_voter_votes():
+    clk = ManualClock()
+    sim = InProcessSimulator(clock=clk, segments=[Segment.INTERNAL], seed=0)
+    bus = InMemoryBus()
+    rca = ResponseCoordinatorAgent("RCA:internal", "internal", bus, sim, clock=clk)
+    rca.setup()
+    # A severe lateral-movement threat escalates to QUARANTINE, which requires a vote.
+    threat = {**_threat(0.9, "internal"), "attack_type": "LATERAL"}
+    await bus.publish(
+        ACLMessage(
+            performative=Performative.INFORM,
+            sender="ACA:internal",
+            receiver="BROADCAST",
+            topic=Topic.THREAT_REPORTS,
+            seq=1,
+            content={"threat": threat, "ts_ms": 0.0},
+        )
+    )
+    clk.advance(20)
+    await rca.step()  # starts the quarantine vote
+    clk.advance(VOTE_DEADLINE_MS + 10)
+    await rca.step()  # deadline passes -> vote concludes -> VOTE_CAST logged
+
+    cast = [e for e in rca.sink.events if e.event_type is EventType.VOTE_CAST]
+    assert cast
+    trace = cast[-1].decision_trace
+    assert trace is not None and trace.votes is not None
+    assert trace.votes["RCA:internal"] in ("ACCEPT", "REJECT")
+    # Payload keys the FR checker reads (FR-11) are unchanged.
+    assert cast[-1].payload["accept_count"] == 1
+    assert cast[-1].payload["member_count"] == 1
+    assert cast[-1].payload["approved"] is True

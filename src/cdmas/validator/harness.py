@@ -7,14 +7,15 @@ deterministic: same seed + same script => identical result.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Any
 
 from cdmas.agents.attackers.base_attacker import AttackerAgent
 from cdmas.agents.factory import build_all
 from cdmas.agents.raa.agent import ResourceAllocatorAgent
 from cdmas.analytics.metrics import compute_metrics
 from cdmas.common.bdi.base_agent import BaseAgent
-from cdmas.common.logging.event_log import EventLog, InMemorySink
+from cdmas.common.logging.event_log import EventLog, EventType, InMemorySink
 from cdmas.common.messaging.bus import InMemoryBus
 from cdmas.common.models.enums import Segment
 from cdmas.common.models.metrics import MetricsSnapshot
@@ -22,6 +23,7 @@ from cdmas.common.timing.clock import ManualClock
 from cdmas.coordination.failure import FailoverCoordinator, HeartbeatMonitor
 from cdmas.simulator.attacks import AttackSpec
 from cdmas.simulator.engine import InProcessSimulator
+from cdmas.simulator.sampling import PacketSampler, correlate_alert_ms
 from cdmas.validator.constraints import CheckContext, ConstraintResult, check_all
 
 _STEP_MS = 50
@@ -34,6 +36,8 @@ class ScenarioResult:
     metrics: MetricsSnapshot
     constraints: list[ConstraintResult]
     segments: list[Segment]
+    packets: list[dict[str, Any]] = field(default_factory=list)  # dashboard packet sample
+    messages: list[dict[str, Any]] = field(default_factory=list)  # dashboard ACL stream
 
     @property
     def failed(self) -> list[ConstraintResult]:
@@ -51,7 +55,10 @@ class ScenarioHarness:
         self.clock = ManualClock()
         self.bus = InMemoryBus()
         self.sink = InMemorySink()
-        self.sim = InProcessSimulator(clock=self.clock, segments=segments, seed=seed)
+        self.sampler = PacketSampler()
+        self.sim = InProcessSimulator(
+            clock=self.clock, segments=segments, seed=seed, sampler=self.sampler
+        )
         self.agents = build_all(segments, self.bus, self.sim, self.sink, self.clock)
         for agent in self.agents:
             if isinstance(agent, ResourceAllocatorAgent):
@@ -113,7 +120,24 @@ class ScenarioHarness:
             total_time_ms=total_time_ms,
         )
         constraints = check_all(CheckContext(events=self.sink.events, metrics=metrics))
-        return ScenarioResult(self.sink.events, metrics, constraints, list(self.sim.segments))
+        packets = self.sampler.export()
+        correlate_alert_ms(packets, self._alerts_by_segment())
+        return ScenarioResult(
+            self.sink.events,
+            metrics,
+            constraints,
+            list(self.sim.segments),
+            packets=packets,
+        )
+
+    def _alerts_by_segment(self) -> dict[str, list[float]]:
+        alerts: dict[str, list[float]] = {}
+        for e in self.sink.events:
+            if e.event_type is EventType.ALERT_PUBLISHED and e.segment is not None:
+                alerts.setdefault(e.segment, []).append(e.wall_ms)
+        for times in alerts.values():
+            times.sort()
+        return alerts
 
 
 def all_agents(harness: ScenarioHarness) -> list[BaseAgent]:

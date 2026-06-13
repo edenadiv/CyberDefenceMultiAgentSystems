@@ -50,6 +50,8 @@ async def build_export() -> dict[str, Any]:
                 },
                 "events": [e.model_dump(mode="json") for e in result.events],
                 "metrics": result.metrics.model_dump(mode="json"),
+                "packets": result.packets,
+                "messages": result.messages,
             }
         )
 
@@ -69,9 +71,11 @@ def main() -> None:
     data = asyncio.run(build_export())
     write_export(target, data)
     events = sum(len(r["events"]) for r in data["replays"])
+    packets = sum(len(r["packets"]) for r in data["replays"])
+    size_kb = target.stat().st_size / 1024
     print(
         f"Wrote {target} ({len(data['replays'])} replays, {events} events, "
-        f"{len(data['validation'])} scenarios)"
+        f"{packets} packets, {len(data['validation'])} scenarios, {size_kb:.0f} KB)"
     )
 
 

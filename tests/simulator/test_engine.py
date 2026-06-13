@@ -3,6 +3,7 @@ from cdmas.common.timing.clock import ManualClock
 from cdmas.simulator.attacks import AttackSpec
 from cdmas.simulator.engine import InProcessSimulator
 from cdmas.simulator.models import ActionRequest
+from cdmas.simulator.sampling import PacketSampler
 
 
 def _sim(seg=Segment.PUBLIC_FACING) -> InProcessSimulator:
@@ -37,6 +38,20 @@ async def test_quarantine_isolates_segment_traffic():
     # No malicious packets reach a quarantined segment (only baseline remains).
     pkts = await sim.get_packets(Segment.SERVER, 10_000)
     assert all(not p.src_ip.startswith("203.0.") for p in pkts)
+
+
+async def test_tick_feeds_sampler_real_attack_packets():
+    sampler = PacketSampler()
+    sim = InProcessSimulator(
+        clock=ManualClock(), segments=[Segment.PUBLIC_FACING], seed=0, sampler=sampler
+    )
+    sim.inject(AttackSpec(type=AttackType.DDOS, segment=Segment.PUBLIC_FACING, intensity=3.0))
+    for _ in range(3):
+        sim.tick()
+    rows = sampler.export()
+    ddos = [r for r in rows if r["kind"] == "ddos"]
+    assert ddos and all(r["src_ip"].startswith("203.0.") for r in ddos)
+    assert any(r["kind"] == "benign" for r in rows)  # some baseline captured too
 
 
 async def test_topology_and_ground_truth():

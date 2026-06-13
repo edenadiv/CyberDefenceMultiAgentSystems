@@ -23,3 +23,35 @@ async def test_sink_records_events():
     assert len(sink.events) == 1
     assert sink.events[0].event_type is EventType.THREAT_CLASSIFIED
     assert sink.events[0].decision_trace.action == "PUBLISH_THREAT_REPORT"
+
+
+def test_decision_trace_carries_structured_internals():
+    trace = DecisionTrace(
+        inputs={"alert_id": "a1"},
+        plan_selected="classify",
+        reasoning="confidence=0.97 novelty=0.02",
+        action="PUBLISH_THREAT_REPORT",
+        confidence=0.97,
+        novelty=0.02,
+        features=[1.0, 2.0, 3.0],
+        feature_names=["volume", "mean_freq", "max_freq"],
+        votes={"RCA:internal": "ACCEPT", "RCA:server": "REJECT"},
+        vote_rationale={"RCA:internal": "severe, not overloaded"},
+    )
+    dumped = trace.model_dump(mode="json")
+    assert dumped["confidence"] == 0.97
+    assert dumped["novelty"] == 0.02
+    assert dumped["feature_names"][0] == "volume"
+    assert dumped["votes"]["RCA:internal"] == "ACCEPT"
+    assert dumped["vote_rationale"]["RCA:internal"] == "severe, not overloaded"
+
+
+def test_decision_trace_new_fields_default_none():
+    # Back-compat: existing call sites that omit the new fields are unaffected.
+    trace = DecisionTrace(plan_selected="respond", reasoning="x", action="BLOCK")
+    assert trace.confidence is None
+    assert trace.novelty is None
+    assert trace.features is None
+    assert trace.feature_names is None
+    assert trace.votes is None
+    assert trace.vote_rationale is None

@@ -1,42 +1,9 @@
 import { useMemo } from "react";
 
+import { KIND_COLOR, NODE_LABELS, NODES } from "../lib/graph";
 import { attackerNodeFor } from "../lib/replay";
 import { useReplay } from "../lib/replayContext";
-
-const NODES: Record<string, { x: number; y: number; color: string }> = {
-  "ATK-DDOS": { x: 90, y: 90, color: "var(--red)" },
-  // shares the DDoS slot: no recording pairs them, and absent attackers aren't drawn
-  "ATK-ZD": { x: 90, y: 90, color: "var(--red)" },
-  "ATK-LAT": { x: 90, y: 250, color: "var(--red)" },
-  CLIENTS: { x: 90, y: 170, color: "var(--cyan)" },
-  NETWORK: { x: 280, y: 170, color: "var(--amber)" },
-  TMA: { x: 450, y: 60, color: "var(--primary)" },
-  ACA: { x: 520, y: 130, color: "var(--primary)" },
-  RCA: { x: 520, y: 210, color: "var(--primary)" },
-  TIA: { x: 450, y: 280, color: "var(--violet)" },
-  RAA: { x: 390, y: 340, color: "var(--primary)" },
-};
-
-const NODE_LABELS: Record<string, string> = {
-  "ATK-DDOS": "ATK-DDOS",
-  "ATK-ZD": "ATK-ZDAY",
-  "ATK-LAT": "ATK-LAT",
-  CLIENTS: "LEGIT-CLIENTS",
-  NETWORK: "NETWORK",
-};
-
-const KIND_COLOR: Record<string, string> = {
-  attack: "var(--red)",
-  normal: "var(--cyan)",
-  allow: "var(--green)",
-  alert: "var(--cyan)",
-  report: "var(--green)",
-  coalition: "var(--violet)",
-  correlate: "var(--violet)",
-  vote: "var(--amber)",
-  grant: "var(--cyan)",
-  mitigate: "var(--green)",
-};
+import { PacketLayer } from "./PacketLayer";
 
 const LEGEND_ITEMS: Array<{ label: string; color: string }> = [
   { label: "Attackers (ATK)", color: "var(--red)" },
@@ -47,8 +14,10 @@ const LEGEND_ITEMS: Array<{ label: string; color: string }> = [
 ];
 
 export function MessageFlow() {
-  const { data, derived, t } = useReplay();
+  const { data, derived, t, director } = useReplay();
   const coalition = derived.coalitions[0];
+  const focusBeat = director.active ? director.beats[director.index] : null;
+  const focusSet = focusBeat ? new Set(focusBeat.highlight.nodes) : null;
   const presentAttackers = useMemo(
     () =>
       new Set(
@@ -180,21 +149,39 @@ export function MessageFlow() {
           );
         })}
 
+        <PacketLayer />
+
         {Object.entries(NODES)
           .filter(([name]) => !name.startsWith("ATK-") || presentAttackers.has(name))
           .map(([name, n]) => {
           const active = derived.flows.some((f) => f.from === name || f.to === name);
+          const focused = focusSet?.has(name) ?? false;
+          const dimmed = focusSet != null && !focused;
+          const hot = active || focused;
           return (
-            <g key={name}>
+            <g key={name} opacity={dimmed ? 0.4 : 1} style={{ transition: "opacity .35s ease" }}>
+              {hot && <circle cx={n.x} cy={n.y} r={focused ? 42 : 34} fill={n.color} opacity={0.12} />}
+              {focused && focusBeat && (
+                <circle
+                  key={`flash-${focusBeat.id}`}
+                  className="node-flash"
+                  cx={n.x}
+                  cy={n.y}
+                  r={30}
+                  fill="none"
+                  stroke={n.color}
+                  strokeWidth={3}
+                />
+              )}
               <circle
                 className="node-c"
                 cx={n.x}
                 cy={n.y}
-                r={active ? 30 : 26}
+                r={hot ? 30 : 26}
                 fill="var(--panel-solid)"
                 stroke={n.color}
-                strokeWidth={active ? 2.4 : 1.4}
-                style={{ filter: active ? `drop-shadow(0 0 10px ${n.color})` : "none" }}
+                strokeWidth={hot ? 2.6 : 1.4}
+                style={{ filter: hot ? `drop-shadow(0 0 12px ${n.color})` : "none" }}
               />
               <text
                 x={n.x}

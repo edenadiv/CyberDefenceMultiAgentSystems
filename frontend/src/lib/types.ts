@@ -3,6 +3,28 @@ export interface DecisionTrace {
   plan_selected: string;
   reasoning: string;
   action: string;
+  // Structured decision internals (Phase 1 backend enrichment) — present on
+  // THREAT_CLASSIFIED (classifier) and VOTE_CAST (per-voter) events.
+  confidence?: number | null;
+  novelty?: number | null;
+  features?: number[] | null;
+  feature_names?: string[] | null;
+  votes?: Record<string, string> | null; // voter_id -> ACCEPT/REJECT
+  vote_rationale?: Record<string, string> | null;
+}
+
+/** A representative sampled packet for the war-room (sibling to events). */
+export interface SampledPacket {
+  src_ip: string;
+  dst_ip: string;
+  port: number;
+  protocol: string;
+  pkt_size: number;
+  freq: number;
+  ts_ms: number;
+  kind: "benign" | "ddos" | "port_scan" | "lateral" | "zero_day";
+  segment: string;
+  alert_ms: number | null; // wall_ms of the alert this burst triggered
 }
 
 export interface CdmasEvent {
@@ -45,6 +67,8 @@ export interface ReplayData {
   topology: TopologyInfo;
   events: CdmasEvent[];
   metrics: Metrics;
+  packets?: SampledPacket[];
+  messages?: unknown[];
 }
 
 export interface Constraint {
