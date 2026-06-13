@@ -28,7 +28,7 @@ dependencies = [
     "httpx>=0.27",
     # Structured logging + persistence
     "structlog>=24.1",
-    "sqlalchemy>=2.0",
+    "sqlalchemy[asyncio]>=2.0",  # [asyncio] pulls greenlet, required by the async engine
     "asyncpg>=0.29",
     "psycopg[binary]>=3.1",
 ]

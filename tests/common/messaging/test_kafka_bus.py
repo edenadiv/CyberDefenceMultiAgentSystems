@@ -20,16 +20,23 @@ def test_publish_before_start_raises():
 
 @pytest.mark.integration
 async def test_kafka_roundtrip():
-    """Requires a running Kafka broker (docker compose up kafka)."""
+    """Requires a running Kafka broker (docker compose up kafka); skipped if unavailable."""
+    import contextlib
+
+    from aiokafka.errors import KafkaConnectionError
+
     from cdmas.common.messaging.acl import ACLMessage
     from cdmas.common.models.enums import Performative
 
     producer = KafkaBus("localhost:9092", client_id="t-prod")
     consumer = KafkaBus("localhost:9092", client_id="t-cons")
     sub = consumer.subscribe(Topic.ALERTS, "ACA:seg1")
-    await producer.start()
-    await consumer.start()
     try:
+        try:
+            await producer.start()
+            await consumer.start()
+        except KafkaConnectionError as e:
+            pytest.skip(f"Kafka broker not available: {e}")
         await producer.publish(
             ACLMessage(
                 performative=Performative.INFORM,
@@ -43,5 +50,7 @@ async def test_kafka_roundtrip():
         msg = await sub.get(timeout=10)
         assert msg is not None and msg.content["n"] == 1
     finally:
-        await producer.stop()
-        await consumer.stop()
+        with contextlib.suppress(Exception):
+            await producer.stop()
+        with contextlib.suppress(Exception):
+            await consumer.stop()

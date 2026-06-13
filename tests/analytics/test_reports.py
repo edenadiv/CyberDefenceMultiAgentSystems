@@ -51,11 +51,19 @@ def test_build_report_assembles_metrics_and_verdict():
 
 @pytest.mark.integration
 async def test_postgres_sink_roundtrip():
-    """Requires a running PostgreSQL (docker compose up postgres)."""
+    """Requires the cdmas PostgreSQL (docker compose up postgres); skipped if unavailable."""
+    from asyncpg.exceptions import PostgresError
+    from sqlalchemy.exc import InterfaceError, OperationalError
+
     from cdmas.common.config import get_settings
     from cdmas.common.logging.postgres_sink import PostgresSink
 
     sink = PostgresSink(get_settings().db_url)
-    await sink.create_schema()
-    await sink.write(_events()[0])
-    await sink.close()
+    try:
+        await sink.create_schema()
+    except (OSError, OperationalError, InterfaceError, PostgresError) as e:
+        pytest.skip(f"PostgreSQL (cdmas role/db) not available: {e}")
+    try:
+        await sink.write(_events()[0])
+    finally:
+        await sink.close()
