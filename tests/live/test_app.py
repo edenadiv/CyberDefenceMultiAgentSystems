@@ -68,3 +68,27 @@ def test_cors_allow_origin_is_configurable():
     )
     r = c.get("/live/topology", headers={**_AUTH, "Origin": "http://dash.example"})
     assert r.headers.get("access-control-allow-origin") == "http://dash.example"
+
+
+def test_send_legal_endpoint():
+    c, _ = _client()
+    r = c.post("/manual/send-legal", json={"segment": "public-facing"}, headers=_AUTH)
+    assert r.status_code == 200 and r.json()["signal"] == "manual_legal"
+
+
+def test_autostart_runs_loop_and_shuts_down():
+    import time
+
+    session = LiveSession(segments=[Segment.PUBLIC_FACING], clock=ManualClock())
+    with TestClient(create_live_app(session, token="t", autostart=True)) as c:
+        time.sleep(0.1)  # the lifespan started the run loop
+        assert c.get("/live/topology", headers=_AUTH).status_code == 200
+        assert session._round > 0
+    # leaving the context triggers shutdown (stop + task cancel)
+
+
+def test_build_app_constructs_without_serving():
+    from cdmas.live.__main__ import build_app
+
+    app = build_app()
+    assert app.title == "CDMAS Live"

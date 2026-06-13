@@ -1,5 +1,7 @@
 """LiveSession — runs the real fleet in-process and streams it to the EventHub."""
 
+import asyncio
+
 from cdmas.common.models.enums import Segment
 from cdmas.common.timing.clock import ManualClock
 from cdmas.live.hub import StreamFrame
@@ -69,3 +71,25 @@ async def test_step_mode_gate_can_be_released():
     assert s.mode == "step"
     s.request_next()  # arms the gate
     assert s._next.is_set()
+
+
+async def test_run_loop_auto_advances_then_stops():
+    s = _session()
+    task = asyncio.create_task(s.run(interval_s=0.001))
+    await asyncio.sleep(0.05)
+    assert s._round > 0  # auto mode advanced on its own
+    s.stop()
+    await asyncio.wait_for(task, timeout=1.0)
+
+
+async def test_run_loop_step_gate_holds_until_next():
+    s = _session()
+    s.set_mode("step")
+    task = asyncio.create_task(s.run(interval_s=0.001))
+    await asyncio.sleep(0.05)
+    assert s._round == 0  # gated: no rounds until Next
+    s.request_next()
+    await asyncio.sleep(0.03)
+    assert s._round >= 1  # exactly advanced after Next
+    s.stop()
+    await asyncio.wait_for(task, timeout=1.0)
