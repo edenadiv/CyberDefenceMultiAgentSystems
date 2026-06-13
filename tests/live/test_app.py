@@ -59,3 +59,12 @@ def test_ws_events_rejects_bad_token():
             raise AssertionError("should have been rejected")
     except Exception:
         pass  # closed before accept
+
+
+def test_cors_allow_origin_is_configurable():
+    session = LiveSession(segments=[Segment.PUBLIC_FACING], clock=ManualClock())
+    c = TestClient(
+        create_live_app(session, token="t", allow_origins=["http://dash.example"], autostart=False)
+    )
+    r = c.get("/live/topology", headers={**_AUTH, "Origin": "http://dash.example"})
+    assert r.headers.get("access-control-allow-origin") == "http://dash.example"

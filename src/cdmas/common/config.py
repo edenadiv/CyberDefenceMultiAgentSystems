@@ -20,6 +20,9 @@ class Settings(BaseSettings):
     sim_api_token: str = "changeme"
     sim_speed: float = 1.0
     sim_tick_ms: int = 10
+    # Live dashboard server (single-process MAS demo)
+    live_port: int | None = None  # falls back to sim_port
+    live_cors_origins: str = "*"  # comma-separated allowed origins ("*" = any, dev only)
     # Persistence
     db_url: str = "postgresql+asyncpg://cdmas:cdmas@localhost:5432/cdmas"
     # Logging

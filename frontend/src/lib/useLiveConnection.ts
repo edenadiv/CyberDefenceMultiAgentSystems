@@ -31,24 +31,52 @@ export function useLiveConnection(enabled: boolean): LiveConnection {
     }
     let closed = false;
     let ws: WebSocket | null = null;
-    try {
-      ws = new WebSocket(`${WS}?token=${encodeURIComponent(TOKEN)}`);
-    } catch {
-      return;
+    let retry: ReturnType<typeof setTimeout> | null = null;
+    let attempt = 0;
+
+    // Exponential backoff so a server restart or network blip reconnects on its own.
+    function schedule(): void {
+      if (closed || retry) return;
+      const delay = Math.min(5000, 500 * 2 ** attempt);
+      attempt += 1;
+      retry = setTimeout(() => {
+        retry = null;
+        connect();
+      }, delay);
     }
-    ws.onopen = () => !closed && setConnected(true);
-    ws.onclose = () => !closed && setConnected(false);
-    ws.onerror = () => !closed && setConnected(false);
-    ws.onmessage = (e) => {
+
+    function connect(): void {
+      if (closed) return;
       try {
-        const frame = JSON.parse(e.data);
-        setState((s) => liveReduce(s, frame));
+        ws = new WebSocket(`${WS}?token=${encodeURIComponent(TOKEN)}`);
       } catch {
-        /* ignore malformed frame */
+        schedule();
+        return;
       }
-    };
+      ws.onopen = () => {
+        if (closed) return;
+        attempt = 0;
+        setConnected(true);
+      };
+      ws.onmessage = (e) => {
+        try {
+          setState((s) => liveReduce(s, JSON.parse(e.data)));
+        } catch {
+          /* ignore malformed frame */
+        }
+      };
+      ws.onclose = () => {
+        if (closed) return;
+        setConnected(false);
+        schedule();
+      };
+      ws.onerror = () => ws?.close(); // -> onclose -> reconnect
+    }
+
+    connect();
     return () => {
       closed = true;
+      if (retry) clearTimeout(retry);
       ws?.close();
       setConnected(false);
     };

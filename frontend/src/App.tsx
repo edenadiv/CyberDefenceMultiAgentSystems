@@ -7,11 +7,11 @@ import { Header } from "./components/Header";
 import { ReplayControls } from "./components/ReplayControls";
 import rawData from "./data/replay.json";
 import { type BeatKind, deriveBeats } from "./lib/director";
-import { liveDerived } from "./lib/liveStore";
+import { liveDerived, liveMetrics } from "./lib/liveStore";
 import { deriveState } from "./lib/replay";
 import { ReplayContext } from "./lib/replayContext";
 import type { DirectorMode, ViewMode } from "./lib/replayContext";
-import type { ExportBundle, ExportData, Metrics } from "./lib/types";
+import type { ExportBundle, ExportData } from "./lib/types";
 import { useLiveConnection } from "./lib/useLiveConnection";
 import { Dashboard } from "./pages/Dashboard";
 import { Inspector } from "./pages/Inspector";
@@ -32,21 +32,6 @@ const HERO_CAPTIONS: Partial<Record<BeatKind, string>> = {
 };
 
 const HOLD_MS = 2400; // dwell on each beat before auto-advancing
-
-// Aggregate metrics aren't computed live; the live "performance" panel reads derived counts.
-const LIVE_METRICS: Metrics = {
-  dr: 1,
-  fpr: 0,
-  mttr_alert_ms: 0,
-  mttr_response_ms: 0,
-  availability: 1,
-  resource_overhead: 0,
-  social_welfare: 0,
-  attacker_utility: 0,
-  coalition_ms: null,
-  evasion_rate: null,
-  concurrent_incidents: 0,
-};
 
 export default function App() {
   const [scenario, setScenario] = useState(DEFAULT_SCENARIO);
@@ -242,7 +227,7 @@ export default function App() {
         duration_ms: liveT,
         topology: liveState.topology,
         events: liveState.events,
-        metrics: LIVE_METRICS,
+        metrics: liveMetrics(liveState),
         packets: [],
       },
       validation: bundle.validation,

@@ -1,7 +1,7 @@
 /* Live store: fold the backend WebSocket frames into the SAME DerivedState the replay
    engine produces, so every panel works in live mode unchanged. Pure reducer — unit-tested. */
 import { type DerivedState, deriveState } from "./replay";
-import type { CdmasEvent, TopologyInfo } from "./types";
+import type { CdmasEvent, Metrics, TopologyInfo } from "./types";
 
 export interface StreamFrame {
   kind: string;
@@ -89,4 +89,50 @@ export function liveReduce(state: LiveState, frame: StreamFrame): LiveState {
 
 export function liveDerived(state: LiveState): DerivedState {
   return deriveState(state.events, state.lastTs, state.topology.segments);
+}
+
+const mean = (xs: number[]): number => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
+
+/** KPIs computed live from the event stream. Aggregates needing ground truth (true DR/FPR,
+    social welfare) aren't knowable live and are left at neutral; the rest are real. */
+export function liveMetrics(state: LiveState): Metrics {
+  const ev = state.events;
+  const respLat = ev
+    .filter((e) => e.event_type === "ACTION_EXECUTED" && e.payload?.signal === "response")
+    .map((e) => e.latency_ms)
+    .filter((l): l is number => typeof l === "number");
+  const alertLat = ev
+    .filter((e) => e.event_type === "ALERT_PUBLISHED")
+    .map((e) => e.latency_ms)
+    .filter((l): l is number => typeof l === "number");
+
+  const statuses = Object.values(
+    deriveState(ev, state.lastTs, state.topology.segments).segments,
+  );
+  const total = statuses.length || 1;
+  const compromised = statuses.filter((s) => s.status === "under_attack").length;
+
+  let overhead = 0;
+  for (const e of ev) {
+    const o = e.payload?.overhead;
+    if (typeof o === "number") overhead = o;
+  }
+
+  const reported = ev.filter(
+    (e) => e.event_type === "THREAT_CLASSIFIED" && e.payload?.reported,
+  ).length;
+
+  return {
+    dr: reported > 0 || compromised === 0 ? 1 : 0,
+    fpr: 0,
+    mttr_alert_ms: mean(alertLat),
+    mttr_response_ms: mean(respLat),
+    availability: 1 - compromised / total,
+    resource_overhead: overhead,
+    social_welfare: 0,
+    attacker_utility: 0,
+    coalition_ms: null,
+    evasion_rate: null,
+    concurrent_incidents: compromised,
+  };
 }

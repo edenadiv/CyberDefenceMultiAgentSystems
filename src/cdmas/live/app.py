@@ -4,6 +4,7 @@ run-control endpoints. Additive — separate from the simulator's ``create_app``
 from __future__ import annotations
 
 import asyncio
+import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from typing import Any
@@ -14,6 +15,9 @@ from pydantic import BaseModel
 
 from cdmas.live.session import LiveSession
 from cdmas.simulator.auth import token_ok
+
+_log = logging.getLogger("cdmas.live")
+DEFAULT_TOKEN = "changeme"
 
 
 class ManualDos(BaseModel):
@@ -31,8 +35,16 @@ class ModeReq(BaseModel):
 
 
 def create_live_app(
-    session: LiveSession, *, token: str = "changeme", autostart: bool = True
+    session: LiveSession,
+    *,
+    token: str = DEFAULT_TOKEN,
+    allow_origins: list[str] | None = None,
+    autostart: bool = True,
 ) -> FastAPI:
+    if token == DEFAULT_TOKEN:
+        _log.warning(
+            "live server is using the DEFAULT API token; set CDMAS_SIM_API_TOKEN before production"
+        )
     run_task: dict[str, asyncio.Task[None] | None] = {"task": None}
 
     @asynccontextmanager
@@ -51,7 +63,7 @@ def create_live_app(
     # The dashboard runs on a different origin (Vite dev server); allow it to call us.
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=allow_origins or ["*"],
         allow_methods=["*"],
         allow_headers=["*"],
     )
