@@ -19,6 +19,17 @@ def _session() -> LiveSession:
     return LiveSession(segments=[Segment.PUBLIC_FACING], clock=ManualClock())
 
 
+async def _wait_until(predicate, timeout: float = 3.0) -> bool:
+    """Poll a condition rather than sleeping a fixed time — robust under CI load."""
+    loop = asyncio.get_event_loop()
+    deadline = loop.time() + timeout
+    while loop.time() < deadline:
+        if predicate():
+            return True
+        await asyncio.sleep(0.005)
+    return False
+
+
 async def test_send_dos_injects_attack_and_emits_sim_event():
     s = _session()
     q = s.hub.subscribe()
@@ -85,20 +96,19 @@ async def test_step_mode_gate_can_be_released():
 async def test_run_loop_auto_advances_then_stops():
     s = _session()
     task = asyncio.create_task(s.run(interval_s=0.001))
-    await asyncio.sleep(0.05)
-    assert s._round > 0  # auto mode advanced on its own
+    assert await _wait_until(lambda: s._round > 0)  # auto mode advances on its own
     s.stop()
-    await asyncio.wait_for(task, timeout=1.0)
+    await asyncio.wait_for(task, timeout=2.0)
 
 
 async def test_run_loop_step_gate_holds_until_next():
     s = _session()
     s.set_mode("step")
     task = asyncio.create_task(s.run(interval_s=0.001))
+    # In step mode the loop gates before the first tick, so it never advances on its own.
     await asyncio.sleep(0.05)
-    assert s._round == 0  # gated: no rounds until Next
+    assert s._round == 0
     s.request_next()
-    await asyncio.sleep(0.03)
-    assert s._round >= 1  # exactly advanced after Next
+    assert await _wait_until(lambda: s._round >= 1)  # advances once Next is requested
     s.stop()
-    await asyncio.wait_for(task, timeout=1.0)
+    await asyncio.wait_for(task, timeout=2.0)
