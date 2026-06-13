@@ -15,6 +15,12 @@ def _client() -> tuple[TestClient, LiveSession]:
     return TestClient(create_live_app(session, token="t", autostart=False)), session
 
 
+def test_healthz_is_unauthenticated():
+    c, _ = _client()
+    r = c.get("/healthz")  # no auth header
+    assert r.status_code == 200 and r.json()["status"] == "ok"
+
+
 def test_manual_actions_require_auth():
     c, _ = _client()
     assert c.post("/manual/send-dos", json={"segment": "public-facing"}).status_code == 401

@@ -72,6 +72,11 @@ def create_live_app(
         if not token_ok(authorization, token):
             raise HTTPException(status_code=401, detail="invalid token")
 
+    @app.get("/healthz")
+    def healthz() -> dict[str, Any]:
+        # Unauthenticated liveness/readiness probe for orchestrators / load balancers.
+        return {"status": "ok", "round": session._round, "subscribers": session.hub.subscribers}
+
     @app.get("/live/topology")
     def topology(_: None = Depends(auth)) -> dict[str, Any]:
         return session.topology()
