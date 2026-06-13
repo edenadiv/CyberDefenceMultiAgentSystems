@@ -62,14 +62,28 @@ async def test_live_fleet_detects_injected_dos():
     q = s.hub.subscribe()
     for _ in range(30):  # warm up the traffic baseline
         await s.tick_round()
-        s.clock.advance(s.step_ms)
     s.send_dos("public-facing", intensity=4.0)
     for _ in range(15):
         await s.tick_round()
-        s.clock.advance(s.step_ms)
     agent_events = [f for f in _drain(q) if f.kind == "agent_event"]
     types = {f.payload["event_type"] for f in agent_events}
     assert "ALERT_PUBLISHED" in types  # the real TMA detected the live attack
+
+
+async def test_finer_clock_yields_nonzero_latencies():
+    s = _session()
+    q = s.hub.subscribe()
+    for _ in range(30):
+        await s.tick_round()
+    s.send_dos("public-facing", intensity=4.0)
+    for _ in range(15):
+        await s.tick_round()
+    agent_events = [f for f in _drain(q) if f.kind == "agent_event"]
+    lats = [
+        f.payload.get("latency_ms") for f in agent_events if f.payload.get("latency_ms") is not None
+    ]
+    # sub-stepping spreads the pipeline in time, so decisions take a real (>0) latency
+    assert any((latency or 0) > 0 for latency in lats)
 
 
 async def test_status_frames_report_topology_and_stream():

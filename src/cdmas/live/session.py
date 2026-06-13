@@ -125,14 +125,18 @@ class LiveSession:
         self._emit_status(self.clock.now_ms())
 
     async def tick_round(self) -> None:
-        now = self.clock.now_ms()
         self.sim.tick()
+        # Spread the agents across the round (sub-step the clock between them) so the
+        # detect -> classify -> respond chain gets realistic, non-zero latencies. The
+        # round's total advance is unchanged, so deadlines/cooldowns behave as before.
+        sub = self.step_ms / max(1, len(self.agents))
         for agent in self.agents:
             await agent.step()
-            self.monitor.beat(agent.agent_id, now)
-        self.sim.injector.prune_expired(now)  # bound memory on a long-running server
+            self.monitor.beat(agent.agent_id, self.clock.now_ms())
+            self.clock.advance(sub)
+        self.sim.injector.prune_expired(self.clock.now_ms())  # bound memory on long runs
         self._round += 1
-        self._emit_status(now)
+        self._emit_status(self.clock.now_ms())
 
     def _emit_status(self, now: float) -> None:
         failed = set(self.monitor.failed(now))
@@ -170,6 +174,5 @@ class LiveSession:
                 self.awaiting_next = False
                 if not self._running:
                     break
-            await self.tick_round()
-            self.clock.advance(self.step_ms)
+            await self.tick_round()  # tick_round advances the clock by one full round
             await asyncio.sleep(interval_s)
