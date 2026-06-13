@@ -51,6 +51,18 @@ class AttackInjector:
     def active(self, now_ms: float) -> list[AttackSpec]:
         return [s for s in self._specs if _active(s, None, now_ms)]
 
+    def prune_expired(self, now_ms: float) -> int:
+        """Drop bounded attacks whose window has fully elapsed (keeps active + future).
+
+        Used by the long-running live server to bound memory; the validator harness runs
+        fixed-length scenarios and never calls it, so scoring is unaffected.
+        """
+        before = len(self._specs)
+        self._specs = [
+            s for s in self._specs if s.duration_ms <= 0 or now_ms <= s.start_ms + s.duration_ms
+        ]
+        return before - len(self._specs)
+
     def overlay(self, segment: Segment, now_ms: float) -> list[Packet]:
         """Malicious packets for `segment` from all attacks active at `now_ms`."""
         out: list[Packet] = []

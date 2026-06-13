@@ -130,6 +130,7 @@ class LiveSession:
         for agent in self.agents:
             await agent.step()
             self.monitor.beat(agent.agent_id, now)
+        self.sim.injector.prune_expired(now)  # bound memory on a long-running server
         self._round += 1
         self._emit_status(now)
 

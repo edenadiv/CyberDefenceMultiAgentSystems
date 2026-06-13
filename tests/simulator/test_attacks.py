@@ -49,3 +49,20 @@ def test_active_window_and_ground_truth():
     assert gt.is_attack(Segment.SERVER, 120) is True
     assert gt.is_attack(Segment.SERVER, 50) is False
     assert gt.is_attack(Segment.INTERNAL, 120) is False
+
+
+def test_prune_expired_drops_only_elapsed_bounded_attacks():
+    inj = AttackInjector(seed=0, topology=NetworkTopology())
+    inj.inject(AttackSpec(type=AttackType.DDOS, segment=Segment.PUBLIC_FACING, duration_ms=100))
+    inj.inject(
+        AttackSpec(type=AttackType.DDOS, segment=Segment.PUBLIC_FACING, duration_ms=0)
+    )  # unbounded
+    inj.inject(
+        AttackSpec(
+            type=AttackType.DDOS, segment=Segment.PUBLIC_FACING, start_ms=500, duration_ms=100
+        )
+    )  # future
+    assert inj.prune_expired(now_ms=300) == 1  # only the first (window elapsed) is dropped
+    assert inj.prune_expired(now_ms=300) == 0  # idempotent
+    # the unbounded attack and the not-yet-started one survive
+    assert len(inj.ground_truth().attacks) == 2
